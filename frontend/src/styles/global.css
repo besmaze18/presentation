@@ -18,11 +18,26 @@
   --accent-strong: #06b6d4;
   --accent-contrast: #05202a;
 
-  --protein: #38bdf8;
-  --carbs: #a78bfa;
-  --fat: #fbbf24;
-  --fiber: #4ade80;
-  --calories: #22d3ee;
+  /* Chart series palette, in fixed slot order: protein=1, carbs=2, fat=3, fiber=4.
+     Validated for the dark chart surface (#16203a) on the adjacent-pair rule -
+     lightness band, chroma floor, colour-vision separation and 3:1 contrast all pass.
+     The earlier hand-picked set failed: its blue and violet were 5.2 apart under
+     deuteranopia, so protein and carbs were indistinguishable. Slots are assigned in
+     order and never cycled, and colour never carries identity alone - every chart has
+     a legend or a title, and a table view. */
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+
+  --protein: var(--series-1);
+  --carbs: var(--series-2);
+  --fat: var(--series-3);
+  --fiber: var(--series-4);
+  --calories: var(--series-1);
+
+  /* The surface charts are drawn on; used for the 2px gaps between stacked segments. */
+  --chart-surface: #16203a;
 
   --positive: #4ade80;
   --warning: #fbbf24;
@@ -676,6 +691,7 @@ button.list__item:hover { background: var(--surface-hover); }
 
 .chart-card { padding: var(--space-4) var(--space-2) var(--space-2) 0; }
 .chart-wrap { width: 100%; height: 220px; }
+.chart-wrap--tall { height: 260px; }
 .recharts-cartesian-axis-tick text { fill: var(--text-subtle); font-size: 11px; }
 .recharts-cartesian-grid line { stroke: var(--border); }
 
