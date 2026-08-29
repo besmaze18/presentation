@@ -39,7 +39,12 @@ export default function NutritionPage() {
   useEffect(() => {
     const requested = searchParams.get('add')
     if (!requested) return
-    const known: Record<string, AddFoodMode> = { manual: 'manual', saved: 'saved', photo: 'manual' }
+    const known: Record<string, AddFoodMode> = {
+      manual: 'manual',
+      saved: 'saved',
+      photo: 'photo',
+      describe: 'describe',
+    }
     setAddMode(known[requested] ?? 'manual')
     searchParams.delete('add')
     setSearchParams(searchParams, { replace: true })
@@ -109,6 +114,9 @@ export default function NutritionPage() {
           <div className="row">
             <button type="button" className="btn" onClick={() => setAddMode('manual')}>
               Add food
+            </button>
+            <button type="button" className="btn btn--secondary" onClick={() => setAddMode('photo')}>
+              📷 Photo
             </button>
             <button
               type="button"

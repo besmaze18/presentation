@@ -40,7 +40,10 @@ public class SecurityConfig {
         "/v3/api-docs",
         "/v3/api-docs/**",
         "/swagger-ui.html",
-        "/swagger-ui/**"
+        "/swagger-ui/**",
+        // Locally stored images are authorised by the HMAC signature in the URL, because an
+        // <img> element cannot send an Authorization header. See StorageController.
+        "/api/storage/files/**"
     };
 
     private final SecurityProperties securityProperties;
