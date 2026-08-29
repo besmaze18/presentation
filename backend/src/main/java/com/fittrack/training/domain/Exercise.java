@@ -12,6 +12,7 @@ import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.annotations.BatchSize;
 
 /** A named movement within a session, owning its ordered sets. */
 @Entity
@@ -31,12 +32,15 @@ public class Exercise extends BaseEntity {
     @Column(name = "notes", length = 500)
     private String notes;
 
+    // Batch-loaded so rendering a session's exercises issues one extra query rather than one
+    // per exercise.
     @OneToMany(
             mappedBy = "exercise",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY)
     @OrderBy("position ASC")
+    @BatchSize(size = 50)
     private List<ExerciseSet> sets = new ArrayList<>();
 
     protected Exercise() {}

@@ -13,7 +13,12 @@ import org.springframework.data.repository.query.Param;
 
 public interface TrainingSessionRepository extends JpaRepository<TrainingSession, UUID> {
 
-    @EntityGraph(attributePaths = {"exercises", "exercises.sets"})
+    /**
+     * Only the exercises are fetched in the same query. Fetching their sets here too would be two
+     * list joins in one statement, which Hibernate rejects; the sets are batch-loaded instead
+     * (see {@code @BatchSize} on Exercise.sets), which avoids an N+1 without the illegal join.
+     */
+    @EntityGraph(attributePaths = "exercises")
     Optional<TrainingSession> findByIdAndUserId(UUID id, UUID userId);
 
     Page<TrainingSession> findByUserIdOrderByStartedAtDesc(UUID userId, Pageable pageable);
