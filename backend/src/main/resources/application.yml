@@ -1,0 +1,131 @@
+spring:
+  application:
+    name: fitness-tracker-backend
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/fittrack}
+    username: ${DATABASE_USER:fittrack}
+    password: ${DATABASE_PASSWORD:fittrack}
+    hikari:
+      maximum-pool-size: ${DATABASE_POOL_SIZE:10}
+      pool-name: fittrack-pool
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  servlet:
+    multipart:
+      max-file-size: ${MAX_UPLOAD_SIZE:10MB}
+      max-request-size: ${MAX_UPLOAD_SIZE:10MB}
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+  shutdown: graceful
+  forward-headers-strategy: framework
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    root: INFO
+    com.fittrack: ${LOG_LEVEL:INFO}
+    org.springframework.security: WARN
+
+fittrack:
+  security:
+    registration-enabled: ${REGISTRATION_ENABLED:true}
+    cors-allowed-origins: ${APP_CORS_ORIGINS:http://localhost:5173,http://localhost:4173}
+    jwt:
+      secret: ${JWT_SECRET:}
+      issuer: fittrack
+      access-token-ttl: ${JWT_ACCESS_TTL:15m}
+      refresh-token-ttl: ${JWT_REFRESH_TTL:30d}
+      cookie-secure: ${JWT_COOKIE_SECURE:false}
+      cookie-name: fittrack_refresh
+      cookie-path: /api/auth
+      cookie-same-site: ${JWT_COOKIE_SAME_SITE:Lax}
+  crypto:
+    # 32-byte key (base64 or raw) used to encrypt third-party OAuth tokens at rest.
+    encryption-key: ${TOKEN_ENCRYPTION_KEY:}
+  storage:
+    provider: ${STORAGE_PROVIDER:local}
+    max-file-size-bytes: ${STORAGE_MAX_FILE_SIZE_BYTES:10485760}
+    signed-url-ttl: ${STORAGE_SIGNED_URL_TTL:15m}
+    local:
+      directory: ${STORAGE_LOCAL_DIR:./data/uploads}
+      public-base-url: ${STORAGE_LOCAL_PUBLIC_BASE_URL:http://localhost:8080/api/storage/files}
+    cloudjs:
+      cloud-name: ${CLOUDJS_CLOUD_NAME:}
+      api-key: ${CLOUDJS_API_KEY:}
+      api-secret: ${CLOUDJS_API_SECRET:}
+      base-url: ${CLOUDJS_BASE_URL:https://api.cloudinary.com/v1_1}
+      delivery-base-url: ${CLOUDJS_DELIVERY_BASE_URL:https://res.cloudinary.com}
+      folder: ${CLOUDJS_FOLDER:fittrack/meals}
+      private: ${CLOUDJS_PRIVATE:true}
+  ai:
+    provider: ${AI_PROVIDER:anthropic}
+    enabled: ${AI_ENABLED:true}
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+      base-url: ${ANTHROPIC_BASE_URL:https://api.anthropic.com}
+      model: ${ANTHROPIC_MODEL:claude-opus-5}
+      max-tokens: ${ANTHROPIC_MAX_TOKENS:4096}
+      timeout: ${AI_TIMEOUT:60s}
+  whoop:
+    enabled: ${WHOOP_ENABLED:true}
+    client-id: ${WHOOP_CLIENT_ID:}
+    client-secret: ${WHOOP_CLIENT_SECRET:}
+    redirect-uri: ${WHOOP_REDIRECT_URI:http://localhost:8080/api/whoop/callback}
+    app-redirect-uri: ${WHOOP_APP_REDIRECT_URI:http://localhost:5173/settings}
+    api-base-url: ${WHOOP_API_BASE_URL:https://api.prod.whoop.com/developer}
+    authorize-url: ${WHOOP_AUTHORIZE_URL:https://api.prod.whoop.com/oauth/oauth2/auth}
+    token-url: ${WHOOP_TOKEN_URL:https://api.prod.whoop.com/oauth/oauth2/token}
+    revoke-url: ${WHOOP_REVOKE_URL:https://api.prod.whoop.com/developer/v2/user/access}
+    scopes: read:profile,read:body_measurement,read:cycles,read:recovery,read:sleep,read:workout,offline
+    initial-sync-days: ${WHOOP_INITIAL_SYNC_DAYS:90}
+    incremental-sync-overlap: ${WHOOP_SYNC_OVERLAP:P2D}
+    timeout: ${WHOOP_TIMEOUT:30s}
+  jobs:
+    whoop-sync-cron: ${WHOOP_SYNC_CRON:0 0 * * * *}
+    refresh-token-cleanup-cron: ${REFRESH_TOKEN_CLEANUP_CRON:0 15 3 * * *}
+  seed:
+    enabled: ${SEED_ENABLED:false}
+    email: ${SEED_EMAIL:demo@fittrack.local}
+    password: ${SEED_PASSWORD:}
+    days: ${SEED_DAYS:30}

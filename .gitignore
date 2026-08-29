@@ -1,0 +1,27 @@
+# Build output
+backend/target/
+frontend/dist/
+frontend/dev-dist/
+frontend/coverage/
+node_modules/
+
+# Local runtime data
+data/
+backend/data/
+
+# Environment - never commit real credentials
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Editors / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

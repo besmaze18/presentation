@@ -1,0 +1,99 @@
+name: fitness-tracker
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: fittrack-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-fittrack}
+      POSTGRES_USER: ${POSTGRES_USER:-fittrack}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # Named volume: the database survives `docker compose down` and restarts.
+      - fittrack-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-fittrack} -d ${POSTGRES_DB:-fittrack}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fittrack-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-fittrack}
+      DATABASE_USER: ${POSTGRES_USER:-fittrack}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+
+      APP_CORS_ORIGINS: ${APP_CORS_ORIGINS:-http://localhost:5173,http://localhost:8081}
+      REGISTRATION_ENABLED: ${REGISTRATION_ENABLED:-true}
+
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set in .env}
+      JWT_ACCESS_TTL: ${JWT_ACCESS_TTL:-15m}
+      JWT_REFRESH_TTL: ${JWT_REFRESH_TTL:-30d}
+      JWT_COOKIE_SECURE: ${JWT_COOKIE_SECURE:-false}
+      JWT_COOKIE_SAME_SITE: ${JWT_COOKIE_SAME_SITE:-Lax}
+      TOKEN_ENCRYPTION_KEY: ${TOKEN_ENCRYPTION_KEY:?TOKEN_ENCRYPTION_KEY must be set in .env}
+
+      AI_PROVIDER: ${AI_PROVIDER:-anthropic}
+      AI_ENABLED: ${AI_ENABLED:-true}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-opus-5}
+      ANTHROPIC_BASE_URL: ${ANTHROPIC_BASE_URL:-https://api.anthropic.com}
+
+      STORAGE_PROVIDER: ${STORAGE_PROVIDER:-local}
+      STORAGE_LOCAL_DIR: /var/lib/fittrack/uploads
+      STORAGE_LOCAL_PUBLIC_BASE_URL: ${STORAGE_LOCAL_PUBLIC_BASE_URL:-http://localhost:8080/api/storage/files}
+      STORAGE_MAX_FILE_SIZE_BYTES: ${STORAGE_MAX_FILE_SIZE_BYTES:-10485760}
+      MAX_UPLOAD_SIZE: ${MAX_UPLOAD_SIZE:-10MB}
+      CLOUDJS_CLOUD_NAME: ${CLOUDJS_CLOUD_NAME:-}
+      CLOUDJS_API_KEY: ${CLOUDJS_API_KEY:-}
+      CLOUDJS_API_SECRET: ${CLOUDJS_API_SECRET:-}
+      CLOUDJS_BASE_URL: ${CLOUDJS_BASE_URL:-https://api.cloudinary.com/v1_1}
+      CLOUDJS_DELIVERY_BASE_URL: ${CLOUDJS_DELIVERY_BASE_URL:-https://res.cloudinary.com}
+      CLOUDJS_FOLDER: ${CLOUDJS_FOLDER:-fittrack/meals}
+      CLOUDJS_PRIVATE: ${CLOUDJS_PRIVATE:-true}
+
+      WHOOP_ENABLED: ${WHOOP_ENABLED:-true}
+      WHOOP_CLIENT_ID: ${WHOOP_CLIENT_ID:-}
+      WHOOP_CLIENT_SECRET: ${WHOOP_CLIENT_SECRET:-}
+      WHOOP_REDIRECT_URI: ${WHOOP_REDIRECT_URI:-http://localhost:8080/api/whoop/callback}
+      WHOOP_APP_REDIRECT_URI: ${WHOOP_APP_REDIRECT_URI:-http://localhost:8081/settings}
+      WHOOP_INITIAL_SYNC_DAYS: ${WHOOP_INITIAL_SYNC_DAYS:-90}
+      WHOOP_SYNC_CRON: ${WHOOP_SYNC_CRON:-0 0 * * * *}
+
+      SEED_ENABLED: ${SEED_ENABLED:-false}
+      SEED_EMAIL: ${SEED_EMAIL:-demo@fittrack.local}
+      SEED_PASSWORD: ${SEED_PASSWORD:-}
+      SEED_DAYS: ${SEED_DAYS:-30}
+    ports:
+      - "8080:8080"
+    volumes:
+      - fittrack-uploads:/var/lib/fittrack/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: fittrack-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-8081}:80"
+
+volumes:
+  fittrack-db-data:
+  fittrack-uploads:

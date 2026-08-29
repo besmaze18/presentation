@@ -1,0 +1,56 @@
+# Tests run against H2 in PostgreSQL compatibility mode so the suite needs no Docker daemon.
+# Flyway migrations remain the source of truth for PostgreSQL; the schema used by tests is
+# generated from the JPA mappings instead. FlywayMigrationIT verifies the real migrations
+# against a genuine PostgreSQL container whenever a Docker daemon is available.
+spring:
+  datasource:
+    url: jdbc:h2:mem:fittrack;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+  main:
+    banner-mode: off
+
+fittrack:
+  security:
+    registration-enabled: true
+    cors-allowed-origins: http://localhost:5173
+    jwt:
+      secret: dGVzdC1zZWNyZXQtdGhhdC1pcy1sb25nLWVub3VnaC1mb3ItaHM1MTItMjU2LWJpdHM=
+      access-token-ttl: 15m
+      refresh-token-ttl: 30d
+  crypto:
+    encryption-key: MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=
+  storage:
+    provider: local
+    local:
+      directory: ${java.io.tmpdir}/fittrack-test-uploads
+      public-base-url: http://localhost:8080/api/storage/files
+  ai:
+    provider: anthropic
+    enabled: true
+    anthropic:
+      api-key: test-key
+      base-url: http://localhost:9999
+  whoop:
+    enabled: true
+    client-id: test-client
+    client-secret: test-secret
+    api-base-url: http://localhost:9999/developer
+    authorize-url: http://localhost:9999/oauth/oauth2/auth
+    token-url: http://localhost:9999/oauth/oauth2/token
+  seed:
+    enabled: false
+
+logging:
+  level:
+    root: WARN
+    com.fittrack: INFO
