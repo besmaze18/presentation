@@ -94,6 +94,24 @@ describe('apiRequest', () => {
     })
   })
 
+  it('reports a transport failure as an offline error rather than a raw TypeError', async () => {
+    const fetchMock = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'))
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(api.get('/api/dashboard')).rejects.toMatchObject({
+      status: 0,
+      code: 'OFFLINE',
+      displayMessage: 'You appear to be offline. Your data is safe — try again once you reconnect.',
+    })
+  })
+
+  it('lets a caller-initiated abort propagate untouched', async () => {
+    const abort = new DOMException('aborted', 'AbortError')
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(abort))
+
+    await expect(api.get('/api/dashboard')).rejects.toBe(abort)
+  })
+
   it('returns null for a 204 response', async () => {
     const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 204 }))
     vi.stubGlobal('fetch', fetchMock)

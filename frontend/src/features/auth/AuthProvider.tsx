@@ -1,18 +1,8 @@
-import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { api, apiRequest, setAccessToken, setSessionLostHandler } from '@/lib/api'
 import { browserTimeZone } from '@/lib/format'
+import { AuthContext, type AuthContextValue } from './authContext'
 import type { AuthResponse, LoginPayload, RegisterPayload, User } from './types'
-
-export interface AuthContextValue {
-  user: User | null
-  status: 'loading' | 'authenticated' | 'anonymous'
-  login: (payload: LoginPayload) => Promise<void>
-  register: (payload: RegisterPayload) => Promise<void>
-  logout: () => Promise<void>
-  refreshUser: () => Promise<void>
-}
-
-export const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)

@@ -37,6 +37,8 @@ export class ApiError extends Error {
 
 function defaultMessage(status: number): string {
   switch (status) {
+    case 0:
+      return 'You appear to be offline. Your data is safe — try again once you reconnect.'
     case 400:
       return 'The request was rejected as invalid.'
     case 401:
