@@ -17,7 +17,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fittrack.common.util.CryptoService;
 import com.fittrack.support.ApiTestClient;
-import com.fittrack.support.IntegrationTest;
+import com.fittrack.support.CommittedIntegrationTest;
+import com.fittrack.support.DatabaseCleaner;
 import com.fittrack.support.TestSupportConfiguration;
 import com.fittrack.training.domain.TrainingSession;
 import com.fittrack.training.domain.TrainingSessionRepository;
@@ -52,7 +53,7 @@ import org.springframework.test.web.servlet.MvcResult;
  * The WHOOP integration end to end against a stubbed API: OAuth state validation, token storage
  * and refresh, idempotent synchronisation, and the projection of workouts into training sessions.
  */
-@IntegrationTest
+@CommittedIntegrationTest
 @Import(TestSupportConfiguration.class)
 class WhoopIntegrationTest {
 
@@ -60,6 +61,9 @@ class WhoopIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private DatabaseCleaner databaseCleaner;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -452,7 +456,7 @@ class WhoopIntegrationTest {
                         .header(HttpHeaders.AUTHORIZATION, other.bearer())
                         .param("date", "2026-03-10"))
                 .andExpect(jsonPath("$.wearableConnected").value(false))
-                .andExpect(jsonPath("$.wearable.recoveryScore").doesNotExist());
+                .andExpect(jsonPath("$.wearable.recoveryScore").value(org.hamcrest.Matchers.nullValue()));
 
         mockMvc.perform(post("/api/whoop/sync").header(HttpHeaders.AUTHORIZATION, other.bearer()))
                 .andExpect(status().isNotFound());
@@ -522,4 +526,10 @@ class WhoopIntegrationTest {
         }
         return null;
     }
+
+    @org.junit.jupiter.api.AfterEach
+    void cleanDatabase() {
+        databaseCleaner.clean();
+    }
+
 }

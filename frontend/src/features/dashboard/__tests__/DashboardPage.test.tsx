@@ -122,6 +122,31 @@ describe('DashboardPage', () => {
     expect(screen.getByText(/Weightlifting · 65 min/)).toBeInTheDocument()
   })
 
+  it('renders a dash, never "undefined", when wearable fields are absent from the payload', async () => {
+    // The API omitted nulls at one point, so these fields arrived as undefined while the types
+    // said `number | null`. Every `!== null` guard passed and the UI rendered "undefined%".
+    const sparse = JSON.parse(JSON.stringify(dashboard))
+    delete sparse.wearable.recoveryScore
+    delete sparse.wearable.strain
+    delete sparse.wearable.sleepPerformancePercentage
+    delete sparse.wearable.expenditureKcal
+    delete sparse.wearable.sleepDurationMillis
+    delete sparse.energy.estimatedBmrKcal
+    delete sparse.energy.estimatedTdeeKcal
+    delete sparse.energy.wearableExpenditureKcal
+    delete sparse.workoutsToday[0].strain
+    delete sparse.workoutsToday[0].caloriesKcal
+    delete sparse.weight.change7dKg
+    mockDashboard(sparse)
+
+    const { container } = renderWithProviders(<DashboardPage />)
+    await screen.findByText('Calculated insights')
+
+    expect(container.textContent).not.toMatch(/undefined/)
+    expect(container.textContent).not.toMatch(/NaN/)
+    expect(screen.getByText('Add height, birth date and weight')).toBeInTheDocument()
+  })
+
   it('prompts to connect a wearable rather than showing blank metrics', async () => {
     mockDashboard({
       ...dashboard,

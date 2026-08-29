@@ -239,6 +239,13 @@ Docker exists.
 External services are never contacted by the suite: WHOOP is a WireMock stub and
 the AI provider is a stub implementing the same interface as the real one.
 
+Most tests run inside a transaction that is rolled back afterwards, which is fast
+and keeps them isolated. Anything whose state must **survive a thrown exception**
+(refresh-token theft detection, WHOOP failure recording, a failed AI analysis)
+is marked `@CommittedIntegrationTest` instead and commits for real, with the
+database truncated between tests — under a wrapping transaction those paths
+produce false passes.
+
 Two structural checks guard the schema itself: `SchemaConsistencyTest` compares
 Hibernate's mapping metadata against the migration SQL, so a table or column in
 one and not the other fails the build rather than production startup (where

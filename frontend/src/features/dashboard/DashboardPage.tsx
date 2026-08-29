@@ -26,8 +26,8 @@ const MACRO_COLORS = {
 }
 
 function macroHint(progress: MacroProgress): string {
-  if (progress.target === null) return 'No target set'
-  if (progress.remaining === null) return `${formatGrams(progress.target)} target`
+  if (progress.target == null) return 'No target set'
+  if (progress.remaining == null) return `${formatGrams(progress.target)} target`
   return progress.remaining >= 0
     ? `${formatGrams(progress.remaining)} left`
     : `${formatGrams(Math.abs(progress.remaining))} over`
@@ -130,21 +130,21 @@ export default function DashboardPage() {
           label="Body weight"
           value={formatWeight(weight.latestKg)}
           hint={
-            weight.change7dKg !== null
+            weight.change7dKg != null
               ? `${formatSignedWeight(weight.change7dKg)} vs previous 7 days`
               : 'Record a weight to see the trend'
           }
         />
         <StatTile
           label="Recovery"
-          value={wearable.recoveryScore !== null ? `${wearable.recoveryScore}%` : '—'}
+          value={wearable.recoveryScore == null ? '—' : `${wearable.recoveryScore}%`}
           hint={wearableConnected ? 'From WHOOP' : 'Connect WHOOP in Settings'}
         />
         <StatTile
           label="Sleep"
           value={formatDurationFromMillis(wearable.sleepDurationMillis)}
           hint={
-            wearable.sleepPerformancePercentage !== null
+            wearable.sleepPerformancePercentage != null
               ? `${wearable.sleepPerformancePercentage}% of need`
               : wearableConnected
                 ? 'No sleep recorded'
@@ -153,9 +153,9 @@ export default function DashboardPage() {
         />
         <StatTile
           label="Strain"
-          value={wearable.strain !== null ? formatNumber(wearable.strain, 1) : '—'}
+          value={wearable.strain == null ? '—' : formatNumber(wearable.strain, 1)}
           hint={
-            wearable.expenditureKcal !== null
+            wearable.expenditureKcal != null
               ? `${formatKcal(wearable.expenditureKcal)} expenditure`
               : wearableConnected
                 ? 'No cycle data yet'
@@ -170,17 +170,17 @@ export default function DashboardPage() {
           <StatTile
             label="Wearable expenditure"
             value={formatKcal(energy.wearableExpenditureKcal)}
-            hint={energy.wearableExpenditureKcal === null ? 'No wearable data' : 'As reported'}
+            hint={energy.wearableExpenditureKcal == null ? 'No wearable data' : 'As reported'}
           />
           <StatTile
             label="Estimated BMR"
             value={formatKcal(energy.estimatedBmrKcal)}
-            hint={energy.estimatedBmrKcal === null ? 'Add height, birth date and weight' : 'Mifflin-St Jeor'}
+            hint={energy.estimatedBmrKcal == null ? 'Add height, birth date and weight' : 'Mifflin-St Jeor'}
           />
           <StatTile
             label="Estimated TDEE"
             value={formatKcal(energy.estimatedTdeeKcal)}
-            hint={energy.estimatedTdeeKcal === null ? 'Needs BMR inputs' : 'BMR × activity level'}
+            hint={energy.estimatedTdeeKcal == null ? 'Needs BMR inputs' : 'BMR × activity level'}
           />
         </div>
         <p className="text-xs text-subtle mt-3">
@@ -214,10 +214,10 @@ export default function DashboardPage() {
                   </span>
                 </span>
                 <span className="list__meta">
-                  {workout.strain !== null && (
+                  {workout.strain != null && (
                     <span className="list__primary">{formatNumber(workout.strain, 1)}</span>
                   )}
-                  {workout.caloriesKcal !== null && (
+                  {workout.caloriesKcal != null && (
                     <span className="list__secondary" style={{ display: 'block' }}>
                       {formatKcal(workout.caloriesKcal)}
                     </span>

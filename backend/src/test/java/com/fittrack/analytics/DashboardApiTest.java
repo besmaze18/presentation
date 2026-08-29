@@ -1,6 +1,7 @@
 package com.fittrack.analytics;
 
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -119,7 +120,7 @@ class DashboardApiTest {
                 .andExpect(jsonPath("$.nutrition.entryCount").value(0))
                 .andExpect(jsonPath("$.nutrition.calories.consumed").value(closeTo(0, 0.01)))
                 .andExpect(jsonPath("$.nutrition.calories.remaining").value(closeTo(2400, 0.01)))
-                .andExpect(jsonPath("$.weight.latestKg").doesNotExist())
+                .andExpect(jsonPath("$.weight.latestKg").value(nullValue()))
                 .andExpect(jsonPath("$.wearableConnected").value(false))
                 .andExpect(jsonPath("$.workoutsToday").isEmpty());
     }
@@ -158,7 +159,7 @@ class DashboardApiTest {
                 .andExpect(jsonPath("$.energy.balanceKcal").value(-759))
                 .andExpect(jsonPath("$.energy.balanceBasis").value("ESTIMATED_TDEE"))
                 // No wearable is connected, so no measured expenditure is claimed.
-                .andExpect(jsonPath("$.energy.wearableExpenditureKcal").doesNotExist())
+                .andExpect(jsonPath("$.energy.wearableExpenditureKcal").value(nullValue()))
                 .andExpect(jsonPath("$.energy.weightKg").value(closeTo(80.0, 0.01)));
     }
 
@@ -172,10 +173,10 @@ class DashboardApiTest {
                         .header(HttpHeaders.AUTHORIZATION, session.bearer())
                         .param("date", DAY))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.energy.estimatedBmrKcal").doesNotExist())
-                .andExpect(jsonPath("$.energy.estimatedTdeeKcal").doesNotExist())
+                .andExpect(jsonPath("$.energy.estimatedBmrKcal").value(nullValue()))
+                .andExpect(jsonPath("$.energy.estimatedTdeeKcal").value(nullValue()))
                 .andExpect(jsonPath("$.energy.balanceBasis").value("NONE"))
-                .andExpect(jsonPath("$.energy.balanceKcal").doesNotExist());
+                .andExpect(jsonPath("$.energy.balanceKcal").value(nullValue()));
     }
 
     @Test
@@ -250,7 +251,7 @@ class DashboardApiTest {
                 .andExpect(jsonPath("$.buckets[0].date").value("2026-03-01"))
                 .andExpect(jsonPath("$.buckets[0].calories").value(closeTo(2000, 0.01)))
                 // A day with nothing logged is present with no calorie figure, not missing.
-                .andExpect(jsonPath("$.buckets[1].calories").doesNotExist())
+                .andExpect(jsonPath("$.buckets[1].calories").value(nullValue()))
                 .andExpect(jsonPath("$.buckets[2].calories").value(closeTo(2400, 0.01)))
                 // Averages are over days that actually have entries.
                 .andExpect(jsonPath("$.totals.daysLogged").value(2))

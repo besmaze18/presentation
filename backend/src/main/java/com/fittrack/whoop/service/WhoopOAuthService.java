@@ -45,6 +45,7 @@ public class WhoopOAuthService {
     private final WhoopConnectionRepository connectionRepository;
     private final WhoopOAuthStateRepository stateRepository;
     private final CryptoService cryptoService;
+    private final WhoopConnectionStateRecorder stateRecorder;
     private final UserService userService;
     private final Clock clock;
     private final SecureRandom secureRandom = new SecureRandom();
@@ -55,6 +56,7 @@ public class WhoopOAuthService {
             WhoopConnectionRepository connectionRepository,
             WhoopOAuthStateRepository stateRepository,
             CryptoService cryptoService,
+            WhoopConnectionStateRecorder stateRecorder,
             UserService userService,
             Clock clock) {
         this.properties = properties;
@@ -62,6 +64,7 @@ public class WhoopOAuthService {
         this.connectionRepository = connectionRepository;
         this.stateRepository = stateRepository;
         this.cryptoService = cryptoService;
+        this.stateRecorder = stateRecorder;
         this.userService = userService;
         this.clock = clock;
     }
@@ -150,8 +153,9 @@ public class WhoopOAuthService {
 
         String refreshToken = cryptoService.decrypt(connection.getRefreshTokenEncrypted());
         if (refreshToken == null || refreshToken.isBlank()) {
-            connection.markReauthorisationRequired("No refresh token is stored for this connection");
-            connectionRepository.save(connection);
+            // Committed separately - the throw below would otherwise roll this back.
+            stateRecorder.markReauthorisationRequired(
+                    connection.getId(), "No refresh token is stored for this connection");
             throw new BadRequestException("The WHOOP connection needs to be re-authorised");
         }
 
@@ -164,8 +168,9 @@ public class WhoopOAuthService {
         } catch (WhoopApiException ex) {
             if (ex.isAuthorisationFailure()) {
                 // WHOOP rejected the grant itself; only the user can fix this by reconnecting.
-                connection.markReauthorisationRequired("WHOOP rejected the stored refresh token");
-                connectionRepository.save(connection);
+                // Recorded in its own transaction so the rethrow cannot undo it.
+                stateRecorder.markReauthorisationRequired(
+                        connection.getId(), "WHOOP rejected the stored refresh token");
             }
             throw ex;
         }

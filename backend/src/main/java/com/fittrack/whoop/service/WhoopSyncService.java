@@ -59,6 +59,7 @@ public class WhoopSyncService {
     private final WhoopProperties properties;
     private final WhoopClient whoopClient;
     private final WhoopOAuthService oAuthService;
+    private final WhoopConnectionStateRecorder stateRecorder;
     private final WhoopConnectionRepository connectionRepository;
     private final WhoopCycleRepository cycleRepository;
     private final WhoopRecoveryRepository recoveryRepository;
@@ -75,6 +76,7 @@ public class WhoopSyncService {
             WhoopProperties properties,
             WhoopClient whoopClient,
             WhoopOAuthService oAuthService,
+            WhoopConnectionStateRecorder stateRecorder,
             WhoopConnectionRepository connectionRepository,
             WhoopCycleRepository cycleRepository,
             WhoopRecoveryRepository recoveryRepository,
@@ -89,6 +91,7 @@ public class WhoopSyncService {
         this.properties = properties;
         this.whoopClient = whoopClient;
         this.oAuthService = oAuthService;
+        this.stateRecorder = stateRecorder;
         this.connectionRepository = connectionRepository;
         this.cycleRepository = cycleRepository;
         this.recoveryRepository = recoveryRepository;
@@ -159,11 +162,10 @@ public class WhoopSyncService {
                     result.totalUpdated());
             return result;
         } catch (WhoopApiException ex) {
-            connection.recordSyncFailure(now, ex.getMessage());
-            if (ex.isAuthorisationFailure()) {
-                connection.markReauthorisationRequired("WHOOP rejected the stored credentials");
-            }
-            connectionRepository.save(connection);
+            // Recorded in its own transaction: rethrowing rolls this one back, and the user would
+            // otherwise never see why their sync stopped working.
+            stateRecorder.recordFailure(
+                    connection.getId(), ex.getMessage(), ex.isAuthorisationFailure());
             throw ex;
         }
     }

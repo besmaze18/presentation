@@ -9,7 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fittrack.support.ApiTestClient;
-import com.fittrack.support.IntegrationTest;
+import com.fittrack.support.CommittedIntegrationTest;
+import com.fittrack.support.DatabaseCleaner;
 import com.fittrack.support.TestSupportConfiguration;
 import jakarta.servlet.http.Cookie;
 import java.util.Map;
@@ -22,12 +23,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-@IntegrationTest
+@CommittedIntegrationTest
 @Import(TestSupportConfiguration.class)
 class AuthenticationFlowTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private DatabaseCleaner databaseCleaner;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -51,7 +55,8 @@ class AuthenticationFlowTest {
                 .andExpect(jsonPath("$.tokenType").value("Bearer"))
                 .andExpect(jsonPath("$.user.email").value(email))
                 .andExpect(jsonPath("$.user.displayName").value("Alex"))
-                // The refresh token must never appear in the response body.
+                // The refresh token has no field on the response at all - it travels only in the
+                // HttpOnly cookie, so this must hold regardless of null-serialisation settings.
                 .andExpect(jsonPath("$.refreshToken").doesNotExist())
                 .andReturn();
 
@@ -192,4 +197,10 @@ class AuthenticationFlowTest {
         assertThat(body).hasSize(1);
         assertThat(body.get(0).path("calorieTarget").asInt()).isPositive();
     }
+
+    @org.junit.jupiter.api.AfterEach
+    void cleanDatabase() {
+        databaseCleaner.clean();
+    }
+
 }

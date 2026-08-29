@@ -57,6 +57,7 @@ public class FoodAnalysisWorkflow {
 
     private final FoodAnalysisService foodAnalysisService;
     private final AiAnalysisRepository repository;
+    private final AiAnalysisStore analysisStore;
     private final AiAnalysisMapper mapper;
     private final StorageService storageService;
     private final StorageProperties storageProperties;
@@ -67,6 +68,7 @@ public class FoodAnalysisWorkflow {
     public FoodAnalysisWorkflow(
             FoodAnalysisService foodAnalysisService,
             AiAnalysisRepository repository,
+            AiAnalysisStore analysisStore,
             AiAnalysisMapper mapper,
             StorageService storageService,
             StorageProperties storageProperties,
@@ -75,6 +77,7 @@ public class FoodAnalysisWorkflow {
             Clock clock) {
         this.foodAnalysisService = foodAnalysisService;
         this.repository = repository;
+        this.analysisStore = analysisStore;
         this.mapper = mapper;
         this.storageService = storageService;
         this.storageProperties = storageProperties;
@@ -116,11 +119,31 @@ public class FoodAnalysisWorkflow {
     }
 
     /**
-     * Uploads the photo first, then analyses it. Storing before analysing means a provider failure
-     * still leaves the user with their picture and a recorded attempt, rather than losing both.
+     * Uploads the photo, records the attempt, then analyses it.
+     *
+     * <p>Deliberately not {@code @Transactional}: each step commits separately through
+     * {@link AiAnalysisStore}. A provider failure must leave the user with their picture and a
+     * recorded FAILED attempt, and a single enclosing transaction would roll both away when the
+     * exception propagates.
      */
-    @Transactional
     public AiAnalysisResponse analyzeImage(
+            UUID userId, byte[] image, String contentType, String originalFilename, String userHint) {
+
+        AiAnalysis pending = persistPendingImageAnalysis(
+                userId, image, contentType, originalFilename, userHint);
+
+        try {
+            FoodAnalysisResult result = foodAnalysisService.analyzeImage(
+                    new ImageAnalysisRequest(image, contentType, userHint, null));
+            return completeImageAnalysis(pending.getId(), result);
+        } catch (AiUnavailableException ex) {
+            analysisStore.markFailed(pending.getId(), ex.getMessage());
+            log.info("Image analysis failed for user {}; the image and the attempt were kept", userId);
+            throw ex;
+        }
+    }
+
+    private AiAnalysis persistPendingImageAnalysis(
             UUID userId, byte[] image, String contentType, String originalFilename, String userHint) {
 
         User user = userService.requireUser(userId);
@@ -133,19 +156,13 @@ public class FoodAnalysisWorkflow {
         analysis.setImageContentType(stored.contentType());
         analysis.setImageSizeBytes(stored.sizeBytes());
         analysis.setInputText(userHint);
+        return analysisStore.save(analysis);
+    }
 
-        try {
-            FoodAnalysisResult result = foodAnalysisService.analyzeImage(
-                    new ImageAnalysisRequest(image, contentType, userHint, null));
-            applyResult(analysis, result);
-        } catch (AiUnavailableException ex) {
-            analysis.markFailed(ex.getMessage());
-            repository.save(analysis);
-            log.info("Image analysis failed for user {}; the image was still stored", userId);
-            throw ex;
-        }
-
-        AiAnalysis saved = repository.save(analysis);
+    private AiAnalysisResponse completeImageAnalysis(UUID analysisId, FoodAnalysisResult result) {
+        AiAnalysis analysis = repository.findById(analysisId).orElseThrow();
+        applyResult(analysis, result);
+        AiAnalysis saved = analysisStore.save(analysis);
         return mapper.toResponse(saved, imageUrl(saved));
     }
 

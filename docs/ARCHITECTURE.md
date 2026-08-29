@@ -326,6 +326,18 @@ expression-based unique indexes — plus that a second `migrate()` is a no-op an
 `mvn test` stays green on a machine without one; run it in CI, where Docker is
 present.
 
+**Some behaviour cannot be tested inside a transaction.** Code that records state
+and then throws — reuse detection revoking a token family, a WHOOP failure being
+noted on the connection, a failed AI analysis keeping its image — commits that
+state in a `REQUIRES_NEW` transaction, because sharing the caller's transaction
+would let the throw roll the record back. A test wrapped in its own transaction
+hides this completely: the rollback never happens, so the test passes while
+production silently discards the write. Those paths therefore use
+`@CommittedIntegrationTest`, which commits for real and truncates between tests.
+The `REQUIRES_NEW` methods also live on their own beans — a self-invoked call
+would bypass the proxy and rejoin the caller's transaction, reintroducing the
+bug the class exists to prevent.
+
 External services are never contacted. WHOOP is a WireMock stub returning real
 v2 response shapes; the AI provider is a stub implementing the same interface as
 the real adapter, and can be told to fail on demand so graceful degradation is
@@ -404,6 +416,10 @@ Honest about what an MVP does not do:
   and is persisted; the display conversion is not implemented.
 - **AI cost is uncapped per user.** There is no per-account rate limit on
   analysis requests yet.
+- **The live WHOOP OAuth round-trip is unverified.** Everything up to the
+  credential boundary is tested against a stubbed v2 API, and the authorization
+  URL was checked with real credentials, but no sandbox available here can reach
+  `api.prod.whoop.com`.
 
 ---
 

@@ -39,6 +39,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserProvisioningService userProvisioningService;
+    private final RefreshTokenRevoker refreshTokenRevoker;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final JwtProperties jwtProperties;
@@ -50,6 +51,7 @@ public class AuthService {
             UserRepository userRepository,
             RefreshTokenRepository refreshTokenRepository,
             UserProvisioningService userProvisioningService,
+            RefreshTokenRevoker refreshTokenRevoker,
             PasswordEncoder passwordEncoder,
             JwtService jwtService,
             JwtProperties jwtProperties,
@@ -58,6 +60,7 @@ public class AuthService {
         this.userRepository = userRepository;
         this.refreshTokenRepository = refreshTokenRepository;
         this.userProvisioningService = userProvisioningService;
+        this.refreshTokenRevoker = refreshTokenRevoker;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.jwtProperties = jwtProperties;
@@ -114,7 +117,9 @@ public class AuthService {
                 .orElseThrow(() -> new UnauthorizedException("Refresh token is not valid"));
 
         if (!stored.isActive(now)) {
-            refreshTokenRepository.revokeFamily(stored.getFamilyId(), now);
+            // Committed in its own transaction: this method throws immediately afterwards, and a
+            // revocation sharing that transaction would be rolled back with it.
+            refreshTokenRevoker.revokeFamily(stored.getFamilyId());
             log.warn("Refresh token reuse detected for user {}; revoked token family", stored.getUser().getId());
             throw new UnauthorizedException("Refresh token is not valid");
         }
@@ -141,12 +146,11 @@ public class AuthService {
         }
         refreshTokenRepository
                 .findByTokenHash(hash(rawRefreshToken))
-                .ifPresent(token -> refreshTokenRepository.revokeFamily(token.getFamilyId(), clock.instant()));
+                .ifPresent(token -> refreshTokenRevoker.revokeFamily(token.getFamilyId()));
     }
 
-    @Transactional
     public void logoutAllSessions(UUID userId) {
-        refreshTokenRepository.revokeAllForUser(userId, clock.instant());
+        refreshTokenRevoker.revokeAllForUser(userId);
     }
 
     private AuthTokens issueTokens(User user, UUID familyId) {

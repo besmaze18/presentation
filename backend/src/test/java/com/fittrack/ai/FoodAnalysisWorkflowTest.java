@@ -18,7 +18,8 @@ import com.fittrack.ai.service.AiUnavailableException;
 import com.fittrack.ai.service.FoodAnalysisService;
 import com.fittrack.support.AiTestConfiguration;
 import com.fittrack.support.ApiTestClient;
-import com.fittrack.support.IntegrationTest;
+import com.fittrack.support.CommittedIntegrationTest;
+import com.fittrack.support.DatabaseCleaner;
 import com.fittrack.support.StubFoodAnalysisService;
 import com.fittrack.support.TestImages;
 import com.fittrack.support.TestSupportConfiguration;
@@ -39,12 +40,15 @@ import org.springframework.test.web.servlet.MvcResult;
  * The rule under test throughout: an AI estimate is a proposal. It is stored, shown for review, and
  * only becomes nutrition when the user confirms it - with the values the user accepted.
  */
-@IntegrationTest
+@CommittedIntegrationTest
 @Import({TestSupportConfiguration.class, AiTestConfiguration.class})
 class FoodAnalysisWorkflowTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private DatabaseCleaner databaseCleaner;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -92,7 +96,7 @@ class FoodAnalysisWorkflowTest {
         assertThat(analysis.path("totals").path("calories").asDouble()).isEqualTo(888.0);
         assertThat(analysis.path("confidence").asDouble()).isEqualTo(0.78);
         assertThat(analysis.path("assumptions")).hasSize(2);
-        // Null fields are omitted from responses, so an absent link means "not yet confirmed".
+        // Not yet confirmed: the field is present and null rather than pointing at an entry.
         assertThat(analysis.hasNonNull("confirmedFoodEntryId")).isFalse();
 
         // Crucially: nothing has been logged as nutrition yet.
@@ -364,4 +368,10 @@ class FoodAnalysisWorkflowTest {
         assertThat(aiAnalysisRepository.findById(analysisId).orElseThrow().getStatus())
                 .isEqualTo(AiAnalysisStatus.DISCARDED);
     }
+
+    @org.junit.jupiter.api.AfterEach
+    void cleanDatabase() {
+        databaseCleaner.clean();
+    }
+
 }
