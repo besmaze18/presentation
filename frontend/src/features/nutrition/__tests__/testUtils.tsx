@@ -13,7 +13,7 @@ export function renderWithProviders(
   })
   const result = render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }} initialEntries={[route]}>{ui}</MemoryRouter>
     </QueryClientProvider>,
   )
   return { ...result, queryClient }

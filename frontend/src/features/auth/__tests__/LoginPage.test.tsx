@@ -16,7 +16,7 @@ function renderLogin(overrides: Partial<AuthContextValue> = {}) {
     ...overrides,
   }
   render(
-    <MemoryRouter initialEntries={['/login']}>
+    <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }} initialEntries={['/login']}>
       <AuthContext.Provider value={value}>
         <LoginPage />
       </AuthContext.Provider>
