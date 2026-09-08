@@ -1,90 +1,41 @@
-/* ---------------------------------------------------------------------------
-   Tab 4 — Demo.
+/* =====================================================================
+   DEMO  —  proof, not promises: four demos of what we already run.
 
-   This page is your running order for the live walk-through. Keep it on the
-   second screen if you have one, or read it once before you switch to the app.
-
-   To drop in screenshots instead of running live, put the image files in
-   assets/ and reference them like this:
-
-       ![Today dashboard](assets/today.png)
-   --------------------------------------------------------------------------- */
-page({
-  slug: 'demo',
-
-  eyebrow: 'Demo',
-  title: 'Let us show you',
-  lead: 'Ten minutes in the working application. Everything below is live — nothing here is a mock-up.',
-
-  body: `
-::: note.accent Before switching
-The app is running at **http://localhost:8081**. Signed in as the demo account
-with a month of seeded history behind it.
-:::
-
-## Running order
-
-::: steps
-### Today — the first screen
-Start where the user starts. Calories against target, macros with what remains,
-weight and trend, recovery and strain, and the calculated insight strip.
-
-Point out that none of these numbers came from a model.
-
-### Log a meal by typing
-Quick-add from the bottom right. Name, meal, time, macros. Show the totals
-update immediately.
-
-### Log a meal from a saved food
-Same entry point, two taps, quantity scales every macro. This is the path a
-returning user actually uses.
-
-### Describe a meal in a sentence
-Type a real sentence. Show the review screen: detected items, confidence, the
-assumptions the model had to make. Edit one number in front of the room, remove
-one item, then save.
-
-This is the moment to say it out loud — nothing is logged until this screen is
-confirmed.
-
-### Photograph a meal
-Same flow, same review screen. If the room's lighting is poor, use the prepared
-photo rather than fighting the camera.
-
-### Training
-Add a session with an exercise and a couple of sets. Show that it lands on
-Today.
-
-### WHOOP
-Settings → WHOOP. Show the connection state, the last sync time, and a manual
-sync. Then back to Today to show recovery and strain in place.
-
-### Progress
-Daily, weekly, monthly. Switch one chart to its table view — this is the
-accessibility commitment, not a fallback.
-:::
-
-## If something goes wrong
-
-::: cards
-### The AI features are unavailable
-Say so and move on. Manual and saved-food logging are unaffected, and that is
-the point of the design: the optional parts announce themselves rather than
-breaking the app.
-
-### WHOOP will not sync
-Show the stored history instead. The dashboard is fully functional with no
-device connected — a no-op adapter is active when nothing is attached.
-
-### The laptop dies
-This deck prints to PDF from any browser, and the screenshots below cover the
-same ground.
-:::
-
-## Screenshots
-
-Replace this section with images once you have them — put the files in
-**assets/** and reference them with the image syntax shown at the top of
-content/demo.js.
-`
-});
+   HOW TO ADD YOUR VIDEOS:
+   1. Put your video files (.mp4 works everywhere) in the  assets/video  folder.
+   2. In each slot below, set  src: "assets/video/your-file.mp4".
+   3. To swap a video during the demo, just change the src (or reorder the
+      slots) and refresh the page. Empty slots show a placeholder.
+   ===================================================================== */
+window.CONTENT = {
+  title: "Proof, not *promises*",
+  subtitle: "The architecture you just saw isn't just coloured blocks — we have built bits and pieces of it at scale, for ourselves. Four demos: the Engineering Platform, OpenCloud, AI Core — and our vision of the {{PLATFORM}} journey, with AI embedded in everything.",
+  sections: [
+    {
+      type: "video",
+      items: [
+        {
+          caption: "{{PLATFORM}} Journey",
+          body: "Our vision of the {{PLATFORM}} journey — AI embedded in everything.",
+          src: "" /* "assets/video/platform-journey.mp4" */, poster: "",
+        },
+        {
+          caption: "Engineering Platform & OpenCloud",
+          body: "Standardised, AI-enabled engineering stack (GitHub Copilot & Claude Code across the SDLC), running on secure-by-default multi-cloud landing zones across AWS, Azure and GCP.",
+          src: "" /* "assets/video/engineering-opencloud.mp4" */, poster: "",
+        },
+        {
+          caption: "AI Core",
+          body: "Enterprise AI platform with pre-built AI, Data & Vector Catalogs and built-in governance.",
+          src: "" /* "assets/video/ai-core.mp4" */, poster: "",
+        },
+      ],
+    },
+    {
+      type: "text",
+      heading: "Talking points / backup notes",
+      body: ["[Add notes here in case the live environment or a recording is unavailable.]"],
+    },
+  ],
+  footer: "Confidential — prepared for {{CLIENT}}.",
+};

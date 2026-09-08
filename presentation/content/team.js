@@ -1,68 +1,139 @@
-/* ---------------------------------------------------------------------------
-   Tab 8 — Team.
-
-   In the ":::people" block the heading is "### Name | Role". The circular
-   avatar is generated from the initials of the name — no image files needed.
-
-       ### Ada Lovelace | Backend lead
-   --------------------------------------------------------------------------- */
-page({
-  slug: 'team',
-
-  eyebrow: 'Team',
-  title: 'Who did the work',
-  lead: 'A small team, each person accountable for a whole vertical rather than a layer. Replace the names below with your own before the meeting.',
-
-  body: `
-::: people
-### Name Surname | Engagement lead
-Your point of contact. Owns scope, schedule and the weekly written update.
-
-### Name Surname | Backend
-Domain model, module boundaries, authentication and the wearable integration.
-
-### Name Surname | Frontend
-The application shell, the four logging flows and the progress charts.
-
-### Name Surname | Design
-The design system this deck is built from, the review-step interaction, and the
-accessibility work on the chart palette.
-
-### Name Surname | Quality
-The test strategy, the structural schema guards, and the stubbed integrations
-that keep the suite offline.
-:::
-
-## How we work
-
-::: cards
-### One team, one backlog
-No hand-off between a "design phase" and a "build phase". The people who
-designed the review screen are the people who built it.
-
-### Written decisions
-Every decision taken where the brief left room is written down, with the
-trade-off and what it would cost to reverse. You have that document.
-
-### Demoable increments
-Two-week increments, each ending in something running that you can click.
-
-### Honest limits
-We tell you what is unverified before you find it. There is a section of this
-deck that does nothing else.
-:::
-
-## Who you would talk to
-
-| Question | Person | Response time |
-|---|---|---|
-| Scope, schedule, commercials | Engagement lead | Same working day |
-| Anything technical | Backend or frontend lead | Same working day |
-| Production incident | On-call rota | Per the agreed SLA |
-
-::: note Replace before the meeting
-Names, roles, photographs and response times are placeholders. Edit them in
-**content/team.js** — nothing else needs to change.
-:::
-`
-});
+/* =====================================================================
+   TEAM  —  pod boxes mirroring the delivery structure.
+   Click any pod to open its member list in a pop-up.
+   Fill in the [Full Name] placeholders (and add/remove members freely).
+   Colours: maroon / dark / blue / teal / gold / slate.
+   ===================================================================== */
+window.CONTENT = {
+  title: "Our *Team*",
+  subtitle: "The pods that deliver the program — click any pod to meet its members.",
+  sections: [
+    {
+      section: "Leadership & Governance",
+      type: "pods",
+      cols: 3,
+      items: [
+        {
+          color: "dark", title: "Program Leadership Pod", sub: "Engagement leadership",
+          members: [
+            { name: "[Full Name]", role: "GCC Engagement Partner" },
+            { name: "[Full Name]", role: "GCC Engagement Partner" },
+            { name: "[Full Name]", role: "QA Partner" },
+            { name: "[Full Name]", role: "Account Relationship Partner" },
+          ],
+        },
+        {
+          color: "maroon", title: "Program Management Pod", sub: "Governance · Scheduling · Risk",
+          members: [
+            { name: "[Full Name]", role: "Program Director" },
+            { name: "[Full Name]", role: "Program Manager" },
+            { name: "[Full Name]", role: "PMO Lead" },
+            { name: "[Full Name]", role: "Risk & Quality Manager" },
+          ],
+        },
+        {
+          color: "blue", title: "Design Authority Pod", sub: "Design · Engineering · Standards",
+          members: [
+            { name: "[Full Name]", role: "Chief Architect" },
+            { name: "[Full Name]", role: "Design Authority Lead" },
+            { name: "[Full Name]", role: "Technical Standards Lead" },
+          ],
+        },
+      ],
+    },
+    {
+      section: "SME Panel",
+      lead: "Global and GCC advisors from our Engineering, AI and Data practice — guidance and support to you and the team. Add each advisor's name and a short description below.",
+      type: "deck",
+      cols: 3,
+      items: [
+        { color: "gold", header: "[Full Name]", sub: "Industry SME", body: "[Short description — sector focus / experience.]" },
+        { color: "gold", header: "[Full Name]", sub: "Industry SME", body: "[Short description — sector focus / experience.]" },
+        { color: "gold", header: "[Full Name]", sub: "Technology SME", body: "[Short description — platform / cloud / architecture.]" },
+        { color: "gold", header: "[Full Name]", sub: "Technology SME", body: "[Short description — data / AI / engineering.]" },
+        { color: "gold", header: "[Full Name]", sub: "Delivery SME", body: "[Short description — delivery / ways-of-working.]" },
+        { color: "gold", header: "[Full Name]", sub: "Delivery SME", body: "[Short description — programme / assurance.]" },
+      ],
+    },
+    {
+      section: "Stream-aligned Pods",
+      type: "pods",
+      cols: 4,
+      items: [
+        {
+          color: "maroon", title: "AI & Data", sub: "Stream-aligned pod",
+          members: [
+            { name: "[Full Name]", role: "Pod Lead" },
+            { name: "[Full Name]", role: "Data Engineer" },
+            { name: "[Full Name]", role: "ML Engineer" },
+            { name: "[Full Name]", role: "Data Governance Specialist" },
+          ],
+        },
+        {
+          color: "blue", title: "Workload Manager", sub: "Stream-aligned pod",
+          members: [
+            { name: "[Full Name]", role: "Pod Lead" },
+            { name: "[Full Name]", role: "Platform Engineer" },
+            { name: "[Full Name]", role: "DevOps Engineer" },
+            { name: "[Full Name]", role: "SRE" },
+          ],
+        },
+        {
+          color: "teal", title: "Control Centre", sub: "Stream-aligned pod",
+          members: [
+            { name: "[Full Name]", role: "Pod Lead" },
+            { name: "[Full Name]", role: "ITSM Engineer" },
+            { name: "[Full Name]", role: "Observability Engineer" },
+            { name: "[Full Name]", role: "FinOps Analyst" },
+          ],
+        },
+        {
+          color: "gold", title: "Platform OS", sub: "Stream-aligned pod",
+          members: [
+            { name: "[Full Name]", role: "Pod Lead" },
+            { name: "[Full Name]", role: "Frontend Engineer" },
+            { name: "[Full Name]", role: "Backend Engineer" },
+            { name: "[Full Name]", role: "UX Designer" },
+          ],
+        },
+      ],
+    },
+    {
+      section: "Enabling & Foundation Pods",
+      type: "pods",
+      cols: 4,
+      items: [
+        {
+          color: "dark", title: "Security", sub: "Enabling pod",
+          members: [
+            { name: "[Full Name]", role: "Security Lead" },
+            { name: "[Full Name]", role: "Security / Cyber Engineer" },
+          ],
+        },
+        {
+          color: "dark", title: "QA", sub: "Enabling pod",
+          members: [
+            { name: "[Full Name]", role: "QA Lead" },
+            { name: "[Full Name]", role: "Test Automation Engineer" },
+          ],
+        },
+        {
+          color: "slate", title: "Cloud & Infra", sub: "Platform Foundation",
+          members: [
+            { name: "[Full Name]", role: "Cloud & Infra Lead" },
+            { name: "[Full Name]", role: "Cloud Engineer" },
+            { name: "[Full Name]", role: "Network Engineer" },
+          ],
+        },
+        {
+          color: "slate", title: "Integration", sub: "Platform Foundation",
+          members: [
+            { name: "[Full Name]", role: "Integration Lead" },
+            { name: "[Full Name]", role: "API / Middleware Engineer" },
+          ],
+        },
+      ],
+    },
+  ],
+  footer: "Confidential — prepared for {{CLIENT}}.",
+};
