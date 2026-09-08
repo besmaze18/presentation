@@ -39,8 +39,7 @@ updates.
 | Tab              | Edit this file                    |
 |------------------|-----------------------------------|
 | Open             | `content/open.js`                 |
-| Our Understanding| `content/our-understanding.js`    |
-| Highlights       | `content/highlights.js`           |
+| Our Vision       | `content/highlights.js`           |
 | Solution         | `content/solution.js`             |
 | Demo             | `content/demo.js`                 |
 | Operate          | `content/operate.js`              |
@@ -59,7 +58,7 @@ data until you type it in.
 
 ### Colouring a word maroon
 In the big `title`, wrap a word in `*stars*` and it turns maroon:
-`title: "Our *Understanding*"` → "Our **Understanding**".
+`title: "Our *Vision*"` → "Our **Vision**".
 
 ### Building blocks you can use in a page's `sections`
 Each section has a `type`. The common ones:
@@ -131,18 +130,18 @@ the slides, move the blocks; to rename a sub-tab, change its `label`. The
 active view is kept in the address bar, so `highlights.html#principles` opens
 that sub-tab directly — useful for jumping straight to a slide mid-meeting.
 
-**Our Vision** (`content/highlights.js`) uses three sub-tabs: Vision Entry →
-Solution Principles → The Architecture.
+**Our Vision** (`content/highlights.js`) uses two sub-tabs: Vision Entry →
+Solution Principles.
 
 A content file can also define `details: { "id": { title, lead, sections } }` —
 these are **pop-up** views. Any `band`, band `group`, or cell with
 `detail: "id"` becomes clickable and opens that pop-up over the page (close
 with ✕, Esc, or by clicking outside).
 
-**Solution** (`content/solution.js`) uses three sub-tabs — Platform Provider →
-Architecture → The Journey — plus pop-ups that drill from the Architecture into
-Platform OS, Data Manager, AI Manager and the Integration + Workload Manager
-detail.
+**Solution** (`content/solution.js`) uses six sub-tabs — Platform Provider →
+The Architecture → GCP at the Heart → QORE → Proposed Architecture → The
+Journey. In the two architecture sub-tabs, clicking a coloured layer header
+collapses or expands that layer, so you can take one layer at a time.
 
 ### Fixed columns
 Add `cols: 2` (or 3 / 4) to a `cards` or `columns` block to force that many

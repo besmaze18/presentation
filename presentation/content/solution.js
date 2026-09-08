@@ -1,39 +1,32 @@
 /* =====================================================================
    SOLUTION  —  an interactive, multi-view section.
 
-   Top buttons switch the main narrative:
-     1. Architecture     (high-level solution architecture — hover the reuse
-                          badges to see what each reusability level means)
-     2. The Journey      (animated provisioning walkthrough, ending on the
-                          "built at scale" bridge into the demos)
+   The pill buttons under the page title are the SUB-TABS. Each one is a
+   slide; click it, or link straight to it with a hash in the address bar,
+   e.g.  solution.html#proposed
 
-   In the Architecture view, sections marked "Expand ⤢" open a POP-UP with
-   the detailed L2 view:
-     - Platform OS        -> Platform OS L2
-     - Integration Layer  -> Integration + Cluster & Workload Manager L2
-     - Data Manager       -> Data Manager L2
-     - AI Manager         -> AI Manager L2
-     - Workload Manager   -> Integration + Cluster & Workload Manager L2
-   Close a pop-up with the ✕ button, the Esc key, or by clicking outside it.
+     1. Platform Provider      the relationship model behind the platform
+     2. The Architecture       the four layers, before any product names
+     3. GCP at the Heart       why Google Cloud anchors the engine layer
+     4. QORE                   what is built once and reused three times
+     5. Proposed Architecture  the same stack with every component named
+     6. The Journey            animated provisioning walkthrough, ending on
+                               the "built at scale" bridge into the demos
 
-   Legend badges:  N = New build,  D = Existing DRCC,  T = {{LEGACY}} reuse,
-   and reuse levels 1 = Software, 2 = Config, 3 = Federate, 4 = Via Platform OS
-   (all reuse indicators share one colour — they are levels of {{LEGACY}} reuse).
+   In the architecture views, click any coloured layer header to collapse
+   or expand that layer — useful for taking one layer at a time in the room.
+
+   To add a slide, copy a whole { id, label, title, lead, sections } block
+   below and give it a new `id`. To reorder the slides, move the blocks.
+   To rename a sub-tab, change its `label`.
+
+   Placeholder words like {{PLATFORM}}, {{COUNTRY}}, {{LEGACY}}, {{XXXX}}
+   and {{YYYY}} are set once in content/config.js.
    ===================================================================== */
-
-var LEGEND = [
-  { key: "N", label: "New build", tip: "Newly built for this program." },
-  { key: "D", label: "Existing DRCC", tip: "Already running on the existing DRCC estate." },
-  { key: "T", label: "{{LEGACY}} reuse", tip: "Reused from the {{LEGACY}} estate." },
-  { key: "1", label: "Software", tip: "Reuse level 1 — Software Reuse: keep the {{LEGACY}} software running; same product, extended scope with refactored configuration." },
-  { key: "2", label: "Config", tip: "Reuse level 2 — Configuration Reuse: refactor the requirements and configuration and apply them on the new sovereign software product." },
-  { key: "3", label: "Federate", tip: "Reuse level 3 — Federation: reach into {{LEGACY}} Azure & GCP — don't move what doesn't need to move." },
-  { key: "4", label: "Via Platform OS", tip: "Reuse level 4 — Expose through Platform OS: components that can't or shouldn't be sovereign, surfaced as APIs / services." },
-];
 
 window.CONTENT = {
   title: "High Level *Solution*",
-  subtitle: "From the sovereign foundation, through a layered reuse strategy, to the full solution architecture — with pop-up drill-downs into each capability layer.",
+  subtitle: "From the platform-provider relationship, through the four architectural layers and the engine beneath them, to the full component-level architecture.",
 
   /* -------------------------------------------------- top-level views */
   views: [
@@ -100,140 +93,318 @@ window.CONTENT = {
         },
       ],
     },
+
+    /* ------------------------------------------------------------------ 2
+       The architecture in four layers — the shape of the whole solution
+       before any component names appear. */
     {
       id: "architecture",
-      label: "Architecture",
-      title: "Solution *Architecture*",
-      lead: "The high-level architecture, layer by layer. Click a section header to expand it; “Expand ⤢” opens the detailed view in a pop-up.",
+      label: "The Architecture",
+      title: "The *Architecture*",
+      lead:
+        "Our proposed solution is built for {{COUNTRY}}, owned by {{COUNTRY}}, and seamlessly integrates with every {{LEGACY}} 2.0 offering — portable by design. Click a layer header to collapse it.",
       sections: [
         {
-          section: "High-Level Component Placement",
-          lead: "One sovereign control plane, deployed on {{XXXX}}'s Oracle DRCC, governing workloads across every cloud estate. Each estate carries the same layered stack.",
-          type: "placement",
-          revealsRest: true,
-          controlPlane: {
-            title: "{{PLATFORM}} — DRCC Sovereign Control Plane",
-            boxes: ["Platform OS", "Integration", "Control Center", "Orchestration & Workloads", "Security and Governance"],
-          },
-          layers: ["Security", "Network & Integration", "Landing Zone"],
-          workloadLabel: "Workload & Data",
-          clouds: [
-            { name: "Oracle DRCC", hi: true },
-            { name: "Microsoft Azure" },
-            { name: "Google Cloud Platform (GCP)" },
+          type: "bands",
+          bands: [
+            {
+              title: "Platform OS — unified front door for {{LEGACY}} 2.0 offerings",
+              cells: [
+                { title: "Cognitive AI", sub: "Capability Hub", ref: "In scope for this programme" },
+                { title: "Integrated Command & Control Centre", sub: "Consumes" },
+                { title: "Digital Twin", sub: "Consumes" },
+              ],
+            },
+            {
+              title: "Layer 1 — three sub-offerings, one consistent experience",
+              color: "teal",
+              cells: [
+                { title: "AI Marketplace", sub: "Publish · discover · license · monetise" },
+                { title: "AI Toolkit & Sandbox", sub: "Build · train · fine-tune · experiment safely" },
+                { title: "ML Ops as a Service", sub: "Deploy · monitor · drift · retrain" },
+              ],
+            },
+            {
+              title: "Layer 2 — QORE, the portable layer",
+              color: "dark",
+              note:
+                "The layer between the infrastructure beneath and the offerings above. It keeps the AI engine swappable, routes sensitive work to sovereign infrastructure, and applies one set of controls everywhere.",
+              cells: [
+                { title: "QORE", sub: "Open-source SDK, standard Kubernetes", ref: "Owned by {{COUNTRY}}" },
+              ],
+            },
+            {
+              title: "Layer 3 — the AI engine",
+              color: "blue",
+              note:
+                "Best-in-class models and compute, used to the full — and replaceable, because nothing above it is wired to it.",
+              cells: [
+                { title: "Google Cloud", sub: "Gemini, Model Garden, GPU / TPU" },
+              ],
+            },
+            {
+              title: "Layer 4 — governance and control",
+              color: "slate",
+              note:
+                "Identity, policy, security and cost management you already own — extended across every cloud, not rebuilt.",
+              cells: [
+                { title: "Microsoft Azure", sub: "Entra ID, Policy, Defender, Sentinel, Arc" },
+              ],
+            },
+            {
+              title: "What that buys {{COUNTRY}}",
+              color: "gold",
+              cells: [
+                { title: "Unified", sub: "One front door" },
+                { title: "Portable", sub: "Swappable AI engine" },
+                {
+                  title: "Owned by {{XXXX}} & {{YYYY}}",
+                  sub: "Source, IP and direction transfer in full",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ------------------------------------------------------------------ 3
+       Why Google Cloud sits at the bottom of that stack. */
+    {
+      id: "gcp",
+      label: "GCP at the Heart",
+      title: "GCP is at the heart of our *solution*",
+      lead:
+        "Google Cloud anchors the infrastructure layer, and Gemini is our AI provider of choice.",
+      sections: [
+        {
+          type: "columns",
+          cols: 3,
+          items: [
+            { title: "Gemini", body: "Frontier models" },
+            { title: "200+", body: "Models in Model Garden" },
+            { title: "GPU · TPU", body: "Elastic AI compute" },
+          ],
+        },
+        {
+          type: "cards",
+          variant: "filled",
+          cols: 2,
+          items: [
+            {
+              num: null,
+              title: "Gemini + Model Garden",
+              body:
+                "Frontier reasoning, multimodal and agentic models, alongside 200+ third-party and open-weight models — all reachable through one governed catalogue.",
+            },
+            {
+              num: null,
+              title: "Agent Platform Managed AI Services",
+              body:
+                "Managed training, serving, pipelines and vector search. We consume these rather than hand-build equivalents — Principle 2 in action.",
+            },
+            {
+              num: null,
+              title: "GPU & TPU at Scale",
+              body:
+                "Elastic accelerator capacity for training, fine-tuning and high-volume inference — sized to real AI economics, not fixed capacity.",
+            },
+            {
+              num: null,
+              title: "Native RAG & Data Services",
+              body:
+                "Vector search and object storage services sit next to the models, keeping retrieval fast and grounded.",
+            },
+          ],
+        },
+        {
+          type: "panel",
+          title: "So why add anything above it?",
+          subtitle:
+            "Because the core should be our strongest AI engine, while the experience and orchestration must stay portable, sovereign and unified. Principle 3 exists precisely so that Principle 2 can be pursued without hesitation: we can adopt Google's proprietary services aggressively, because they sit behind interfaces that keep us free.",
+        },
+      ],
+    },
+
+    /* ------------------------------------------------------------------ 4
+       QORE — what is built once and reused across all three offerings. */
+    {
+      id: "qore",
+      label: "QORE",
+      title: "QORE — purpose-built across *three offerings*",
+      lead:
+        "We propose a custom-built solution, designed and developed for {{COUNTRY}}'s specific requirements. We call it QORE — an open-source, extensible platform already proposed for iCCC and Digital Twin, now extended to Cognitive AI as the orchestration and portability layer.",
+      sections: [
+        {
+          section: "What QORE contributes as reusable enablers",
+          type: "tags",
+          items: [
+            "Model Gateway",
+            "Agent Runtime & MCP",
+            "Workflow Canvas & Engine",
+            "RAG & Vector Services",
+            "ML Ops Pipelines",
+            "Responsible AI & Audit",
           ],
         },
         {
           type: "bands",
-          legend: LEGEND,
           bands: [
             {
-              title: "Platform OS — unified digital front", detail: "platform-os", collapsed: true,
+              title: "QORE — the common SDK & orchestration layer",
+              color: "dark",
+              note:
+                "Designed from the ground up on open standards — deploys on any Kubernetes — owned by {{COUNTRY}}.",
               cells: [
-                { title: "Red Hat Developer Suite (RHDS)", badges: ["N"], sub: "Backstage-based internal developer platform" },
-                { title: "Custom Next.js", badges: ["N"], sub: "{{LEGACY}} 2.0 Discovery front end" },
-                { title: "Strapi", badges: ["N"], sub: "Headless CMS for content & offerings" },
-              ],
-            },
-            {
-              title: "Integration Layer & APIs", detail: "integration-cwm", color: "blue", collapsed: true,
-              cells: [
-                { title: "API Gateway", badges: ["3", "N"], sub: "IBM Connect" },
-                { title: "Service Mesh", badges: ["N"], sub: "OpenShift Service Mesh" },
-                { title: "Event Streaming", badges: ["D", "N"], sub: "IBM Streaming / OCI streaming" },
-              ],
-            },
-            {
-              title: "Control Centre", color: "teal", collapsed: true,
-              cells: [
-                { title: "ITSM", badges: ["1", "N"], sub: "ServiceNow / Symphony" },
-                { title: "Observability", badges: ["N"], sub: "Dynatrace" },
-                { title: "CRM", badges: ["1", "N"], sub: "Dynamics 365 / Custom" },
-                { title: "FinOps", badges: ["3", "N"], sub: "IBM Turbonomic" },
-              ],
-            },
-            {
-              title: "Orchestration & Manager Layer", color: "dark", collapsed: true,
-              groups: [
-                {
-                  title: "Data Manager", detail: "data-manager",
-                  cells: [
-                    { title: "Backup / Replication / DR", badges: ["N"], sub: "Argo + ACM + Ansible" },
-                    { title: "Data Governance", badges: ["D"], sub: "IDMC (CDGC, CDQ, CDMM, MDM), ArcGIS" },
-                    { title: "Streaming", badges: ["3", "D", "N"], sub: "OCI Streaming + Spark/Flink, IDMC CMI + Debezium (CDC)" },
-                    { title: "Federation / Virtualization", badges: ["3", "N"], sub: "Starburst / IBM watsonx.data" },
-                    { title: "Data Ingestion", badges: ["N"], sub: "IDMC CAI + CDI" },
-                    { title: "Lakehouse / ACID Storage", badges: ["3", "D", "N"], sub: "Apache Iceberg + OCI Obj Storage" },
-                  ],
-                },
-                {
-                  title: "AI Manager", detail: "ai-manager",
-                  cells: [
-                    { title: "Model Lifecycle", badges: ["3", "D", "N"], sub: "Kubeflow + KServe + MLflow + Sigstore" },
-                    { title: "GPU / Runtime", badges: ["3", "N"], sub: "IBM Turbonomic" },
-                    { title: "Inference Runtime", badges: ["3", "D", "N"], sub: "vLLM + KServe" },
-                  ],
-                },
-                {
-                  title: "Workload Manager", detail: "integration-cwm",
-                  cells: [
-                    { title: "Central Cluster Mgmt", badges: ["3", "N"], sub: "Red Hat ACM + OpenShift" },
-                    { title: "Workload Scheduling", badges: ["N"], sub: "OpenShift" },
-                    { title: "OS & Software Upgrades", badges: ["N"], sub: "Ansible + OpenShift" },
-                    { title: "Multi-Cloud Orch", badges: ["3", "N"], sub: "Ansible + Red Hat ACM" },
-                    { title: "Performance Optimization", badges: ["N"], sub: "IBM Turbonomic + Dynatrace" },
-                    { title: "Infra Provisioning / CI/CD", badges: ["3", "N"], sub: "Terraform + Harbor" },
-                  ],
-                },
-              ],
-            },
-            {
-              title: "Security & Governance", color: "slate", collapsed: true,
-              cells: [
-                { title: "Identity & Access", badges: ["D", "N"], sub: "Ping Identity, OCI IAM" },
-                { title: "Data Security", badges: ["D", "N"], sub: "Palo Alto, Forcepoint DLP, OCI Logging" },
-                { title: "Infrastructure Security", badges: ["1", "D", "N"], sub: "Palo Alto, ManageEngine, OpenShift, OCI Native" },
-                { title: "Application Security", badges: ["1", "D", "N"], sub: "CycloneDX, Prisma, Checkmarx, Snyk, mabl" },
-                { title: "GRC", badges: ["N"], sub: "ServiceNow IRM / GRC" },
-              ],
-            },
-            {
-              title: "Adapters & Connectors", collapsed: true,
-              cells: [
-                { title: "Crossplane providers · Terraform OCI/Azure/GCP · IBM Connect · Service Operators (DB, Cache, MQ)" },
-              ],
-            },
-            {
-              title: "Cloud & Infrastructure", color: "gold", collapsed: true,
-              cells: [
-                { title: "Oracle DRCC", badges: ["N"] },
-                { title: "GCP", badges: ["2"] },
-                { title: "Azure", badges: ["2"] },
-                { title: "Private DC / Edge" },
-                { title: "{{LEGACY}} 1.0", badges: ["T"] },
-              ],
-              groups: [
-                {
-                  title: "Foundation Services",
-                  cells: [
-                    { title: "Resource Domains", badges: ["D", "N"], sub: "OCI DRCC compartments + Azure & GCP Native" },
-                    { title: "Compute", badges: ["D", "N"], sub: "OCI DRCC compute + OpenShift + GPU, Azure & GCP Native" },
-                    { title: "Network", badges: ["N"], sub: "OCI VCN + Palo Alto" },
-                    { title: "Storage", badges: ["D", "N"], sub: "OCI Object + File Storage + Azure & GCP Native" },
-                    { title: "Baselines & Telemetry", badges: ["N"], sub: "Ansible + OS baselines + Cloud Guard + Cloud Native Monitoring" },
-                  ],
-                },
+                { title: "Cognitive AI Toolkit", sub: "Capability built here", ref: "Built once" },
+                { title: "Integrated Command & Control Centre", sub: "Consumes" },
+                { title: "Digital Twin", sub: "Consumes" },
               ],
             },
           ],
         },
         {
           type: "text",
-          body: ["Disaster Recovery & Backup (FR18-21, T126) — spans all clouds and estates."],
+          body: [
+            "We are proposing to build QORE for your offerings. The interfaces between them are a design decision we would need to make and validate during the Discovery & Design phase.",
+            "Capability is built once in Cognitive AI and consumed by iCCC and Digital Twin, and Platform OS Discovery is the single entry point to the Marketplace, Toolkit & Sandbox and ML Ops for every user across the programme.",
+          ],
         },
       ],
     },
 
+    /* ------------------------------------------------------------------ 5
+       The same architecture with every component named. Layer headers
+       collapse, so you can open one layer at a time in the room. */
+    {
+      id: "proposed",
+      label: "Proposed Architecture",
+      title: "Proposed Solution *Architecture*",
+      lead:
+        "Open-source platform, Google-powered engine, Azure-governed — behind one portability boundary. Click a layer header to collapse or expand it.",
+      sections: [
+        {
+          type: "bands",
+          bands: [
+            {
+              title: "Front Door — Platform OS Discovery Portal",
+              color: "teal",
+              cells: [
+                {
+                  title: "Single entry point",
+                  sub: "Marketplace, Toolkit & Sandbox and ML Ops for every user across the programme",
+                },
+              ],
+            },
+            {
+              title: "Layer 1 Application — QORE Experience",
+              cells: [
+                { title: "AI Marketplace", sub: "Catalog, publishing, entitlements, subscribe", ref: "React · Next.js" },
+                { title: "Notebooks / IDE", sub: "Experiment, prototype, test", ref: "JupyterHub · code-server" },
+                { title: "ML Ops Console", sub: "Runs, deployments, drifts, usage", ref: "React · Grafana" },
+                { title: "Self-service Portal", sub: "Projects, datasets, training, deploy", ref: "React · Entra OIDC" },
+                { title: "Workflow & Agent Canvas", sub: "Visual build for models & agents", ref: "React Flow" },
+                { title: "Prompt & App Builder", sub: "Prompt engineering and app assembly", ref: "Custom build" },
+                { title: "API Hub — Programmatic Access", sub: "Everything the portal does, callable", ref: "REST, SDK, CLI, MCP Server" },
+              ],
+            },
+            {
+              title: "Standard APIs — decoupling platform services from the consumers",
+              color: "gold",
+              note: "Apigee for C0–C3; Kong for C4.",
+              cells: [
+                { title: "MLflow API" },
+                { title: "KServe OIP", sub: "OpenAI-compatible" },
+                { title: "MCP · A2A" },
+                { title: "OpenAPI" },
+              ],
+            },
+            {
+              title: "Layer 2 Orchestration — QORE Platform Services",
+              color: "teal",
+              note: "Open-source components on Kubernetes.",
+              cells: [
+                { title: "Model Gateway", ref: "LiteLLM" },
+                { title: "Inference Serving", ref: "KServe · vLLM / Triton" },
+                { title: "Agent Builder & Runtime", ref: "LangGraph / ADK" },
+                { title: "Workflows & Training", ref: "Kubeflow · Argo · AutoGluon" },
+                { title: "Model Registry & Experiment", ref: "MLflow" },
+                { title: "RAG & Vector", ref: "LlamaIndex / LangChain" },
+                { title: "MCP Server", ref: "FastMCP" },
+                { title: "AgentOps & Observability", ref: "Langfuse" },
+                { title: "Model Monitoring", ref: "Evidently · NannyML" },
+                { title: "Marketplace & Catalogue Services", ref: "Custom build" },
+                { title: "Telemetry & FinOps", ref: "OTel Collector · Prometheus · OpenCost · Kueue" },
+                { title: "Responsible AI", sub: "Evals & guardrails", ref: "Ragas · NeMo Guardrails" },
+                { title: "Policy Enforcement", ref: "OPA / Kyverno" },
+                { title: "Supply Chain & GitOps Delivery", ref: "cosign · Trivy · Argo CD" },
+                { title: "Explainability & Bias", ref: "SHAP · LIME · Fairlearn · DiCE" },
+              ],
+            },
+            {
+              title: "Layer 3 AI Engine & Infrastructure",
+              color: "blue",
+              note: "Consumed via LiteLLM and KServe only.",
+              groups: [
+                {
+                  title: "Google Cloud — C0–C3 workloads",
+                  color: "blue",
+                  note: "Portable to Azure, Oracle and on-premises.",
+                  cells: [
+                    { title: "Gemini · Model Garden", sub: "200+ models" },
+                    { title: "Google Agent Platform", sub: "Training, serving" },
+                    { title: "GPU / TPU", sub: "Elastic AI compute" },
+                    { title: "Storage & Data", sub: "Cloud SQL (PostgreSQL), BigQuery, Vector Search" },
+                    { title: "Network & Security", sub: "Cloud LB, DNS, CDN, VPC, Model Armor" },
+                    { title: "Kubernetes Runtime", sub: "GKE" },
+                  ],
+                },
+                {
+                  title: "Sovereign — DRCC / on-premises / edge HPC — C4 workloads",
+                  color: "dark",
+                  cells: [
+                    { title: "vLLM", sub: "e.g. Gemma / Llama" },
+                    { title: "OCIR", sub: "Sovereign Qdrant" },
+                    { title: "Kubernetes Runtime" },
+                    { title: "GPU" },
+                  ],
+                },
+                {
+                  title: "Open artifact formats",
+                  color: "gold",
+                  note: "The formats that make the portability boundary real.",
+                  cells: [
+                    { title: "OCI / ModelPack" },
+                    { title: "Sigstore · SPDX" },
+                    { title: "OpenTelemetry · OTLP" },
+                  ],
+                },
+              ],
+            },
+            {
+              title: "Layer 4 Control Plane — Azure",
+              color: "slate",
+              note: "Reused from {{LEGACY}} 1.0 where applicable.",
+              cells: [
+                { title: "Identity & Access", ref: "Entra ID" },
+                { title: "Policy", ref: "Azure Policy" },
+                { title: "Posture & SIEM", ref: "Defender · Sentinel" },
+                { title: "Fleet, Inventory & Policy", ref: "Azure Arc" },
+                { title: "Monitoring & ITSM", ref: "Azure Monitor" },
+                { title: "FinOps", ref: "GCP Billing Export, chargeback" },
+              ],
+            },
+          ],
+        },
+        {
+          type: "text",
+          bullets: [
+            "Where multiple technology options are shown, the preferred option will be confirmed with {{XXXX}} & {{YYYY}} during Discovery & Design against jointly agreed evaluation criteria.",
+            "The sovereign infrastructure runs the full QORE serving and training components — gateway, LLM, KServe/vLLM, LangGraph and MCP server, MLflow/Postgres registry, OPA, OTel, Argo CD and the Kubeflow/Argo training stack. Commerce and discovery stay central in GCP with metadata-only federation.",
+          ],
+        },
+      ],
+    },
     /* ---------------------------------------------------------------- 4
        The provisioning & deployment journey — an animated walkthrough of a
        real request travelling through the platform. Press Play, or step
@@ -332,238 +503,6 @@ window.CONTENT = {
       ],
     },
   ],
-
-  /* -------------------------------------------------- pop-up detail views */
-  details: {
-    "platform-os": {
-      title: "Platform OS — *L2*",
-      lead: "The detailed Platform OS build. One front door for every persona, on a Red Hat Developer Suite (Backstage) internal developer platform.",
-      sections: [
-        {
-          type: "bands",
-          legend: LEGEND,
-          bands: [
-            {
-              title: "Portal Experiences — One Front Door for Every Persona",
-              cells: [
-                { title: "Self-Service Portal", badges: ["N"], sub: "End-user catalog + provisioning", ref: "FR-EX-02,04,05,14,15 · TR-EX-14-17" },
-                { title: "Administrative Portal", badges: ["N"], sub: "Tenant + governance config", ref: "FR-EX-03,07-12,18-20, T41 · TR-EX-38" },
-                { title: "{{LEGACY}} 2.0 Discovery", badges: ["2", "N", "4"], sub: "Offerings, Products, CMS (Next.js + Strapi)", ref: "FR-DP-01-32 · TR-DP-01-40" },
-                { title: "Developer Portal + Knowledge Hub", badges: ["N"], sub: "API catalogue, sandbox, RAG assistant", ref: "FR-INT-15 · TR-INT-27,51 · TR-DevX-01-10 · TR-KH-01-10" },
-              ],
-            },
-            {
-              title: "Red Hat Developer Suite (Backstage) — Central Internal Developer Platform (IDP)",
-              note: "Single, opinionated developer interface that unifies catalog, templates, docs, search, plugins, and policy.",
-              cells: [
-                { title: "Software Catalog", badges: ["N"], sub: "Entities, ownership, dependencies", ref: "FR-EX-04, T156 · TR-EX-14 · TR-INT-24" },
-                { title: "Software Templates", badges: ["N"], sub: "Scaffolders, golden paths, blueprints", ref: "FR-EX-04 · TR-EX-15,16 · TR-DevX-01" },
-                { title: "TechDocs", badges: ["N"], sub: "Docs-as-code, versioned, in-context", ref: "TR-KH-01,06,09 · TR-DP-23-28" },
-                { title: "Search", badges: ["N"], sub: "Federated across catalog + docs + APIs", ref: "FR-DP-07,08 · TR-INT-04" },
-                { title: "Plugin Framework", badges: ["N"], sub: "React UI + Node backend plugins; SPI", ref: "TR-EX-40 · TR-INT-29" },
-                { title: "Auth + Permissions", badges: ["N"], sub: "OIDC/SAML to Okta + Ping; Backstage RBAC", ref: "FR-EX-01 · TR-EX-03-07 · TR-DP-16-18" },
-                { title: "GitOps + Delivery", badges: ["N"], sub: "Argo CD + GitLab plugins; PR/pipeline/artifact", ref: "FR-EX-15 · TR-EX-30,31" },
-                { title: "Theming + i18n", badges: ["N"], sub: "AR/EN, RTL, WCAG 2.1 AA, design tokens", ref: "FR-EX-13, FR-DP-03,06, T18 · TR-EX-08-10" },
-              ],
-            },
-            {
-              title: "RHDS Backstage Plugins — Surfacing {{PLATFORM}} Capabilities as One Experience",
-              cells: [
-                { title: "AI Manager Plugin", badges: ["N"], sub: "Models, GPU pools, KAI quotas, RAI gates", ref: "FR-EX-07,20 · TR-EX-22,23" },
-                { title: "Data Manager Plugin", badges: ["N"], sub: "Catalog, lineage, DQ, residency, backup", ref: "FR-EX-06 · TR-EX-21 · T152, T156, T160" },
-                { title: "Workload Plugin", badges: ["N"], sub: "Scheduling, multi-cloud, drift, inventory", ref: "FR-EX-05 · TR-EX-18-20" },
-                { title: "FinOps Plugin", badges: ["N"], sub: "Quotas, budgets, showback, forecasting", ref: "FR-EX-11 · TR-EX-35" },
-                { title: "Observability Plugin", badges: ["N"], sub: "Dynatrace + OTel; SLO/SLA, alerts, traces", ref: "FR-EX-10,16 · TR-EX-32,33" },
-                { title: "Policy Plugin", badges: ["N"], sub: "OPA / Styra; guardrails, violations, exemptions", ref: "FR-EX-14,17 · TR-EX-26-29,34" },
-              ],
-            },
-            {
-              title: "Specialized Capabilities (RHDS Backstage-integrated)",
-              cells: [
-                { title: "Strapi", badges: ["N"], sub: "CMS for {{LEGACY}} 2.0 content; AR/EN workflows", ref: "FR-DP-20-28 · TR-DP-23-34" },
-                { title: "SDK Catalogue + Sandbox", badges: ["N"], sub: "OpenAPI SDKs; container sandboxes; GPU on-demand", ref: "TR-DevX-01,02,04,06" },
-                { title: "License Hub", badges: ["N"], sub: "Centralized tool licensing + usage tracking", ref: "TR-DevX-03" },
-                { title: "RAG Knowledge Assistant", badges: ["N"], sub: "RAG over TechDocs + APIs", ref: "TR-KH-02,03,07" },
-                { title: "Community + Peer Review", badges: ["N"], sub: "Forums, contributions, peer review, moderation", ref: "TR-KH-04,10" },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    "integration-cwm": {
-      title: "Integration + *CWM* — L2",
-      lead: "DevOps, the DRCC control plane on IBM Sovereign Core (highlighted in gold), tool usage and multi-cloud fleet management.",
-      sections: [
-        {
-          type: "bands",
-          legend: LEGEND,
-          bands: [
-            {
-              title: "DRCC DevOps (OpenShift Cluster – IBM Sovereign Core)",
-              note: "DevOps Cluster — existing Azure Pipelines continue to function for non-production capabilities; Azure Pipelines trigger promotion to production, directly or via webhooks from GCP or OCI.",
-              cells: [
-                { title: "Azure Pipelines Agent", sub: "DRCC Pipeline Runner" },
-                { title: "Buildah", sub: "OCI Container Builder" },
-                { title: "Trivy", sub: "Vulnerability Scanning" },
-                { title: "Cosign", sub: "Cryptographic Signing" },
-                { title: "Skopeo", sub: "Production Promotion" },
-              ],
-            },
-            {
-              title: "DRCC Control Plane",
-              note: "API Management — all inbound traffic is routed through IBM API Connect: security & governance enforcement, API exposure and standardization, analytics and observability. Cluster Provisioning — initial cluster provisioning performed utilising Terraform modules and provisioned via Ansible Automation Platform Playbooks (Terraform, IBM Sovereign Core).",
-              cells: [
-                { title: "OCI Streaming", badges: ["D"] },
-                { title: "Harbor", badges: ["N"] },
-                { title: "FluxCD", badges: ["N"] },
-                { title: "IBM API Connect", badges: ["N"] },
-                { title: "Dynatrace", badges: ["1"] },
-                { title: "Red Hat Ansible", badges: ["N"], core: true },
-                { title: "Red Hat ACM", badges: ["N"], core: true },
-                { title: "IBM Turbonomic", badges: ["N"] },
-              ],
-            },
-            {
-              title: "Tool Usage",
-              cells: [
-                { title: "ACM", sub: "Policy enforcement, configuration sync, upgrades" },
-                { title: "Ansible", sub: "Workflow, cluster & workload deployment, post-provisioning tasks" },
-                { title: "ACM", sub: "Cluster health, metrics, inventory reporting" },
-                { title: "Harbor", sub: "Pull containers and image models" },
-                { title: "Dynatrace", sub: "Telemetry, logs, traces" },
-                { title: "IBM Turbonomic", sub: "Resource usage, GPU metrics, optimization data" },
-              ],
-            },
-            {
-              title: "Cloud Components",
-              cells: [
-                { title: "KubeTurbo", badges: ["N"], sub: "Resource monitoring, workload analysis, optimisation, action execution" },
-                { title: "Dynatrace / ActiveGate", badges: ["N"], sub: "Observability" },
-                { title: "FluxCD", badges: ["N"], sub: "Config drift, bootstrap" },
-                { title: "Service Mesh (Istio)", badges: ["N"], sub: "Traffic management, encryption, resilience, observability", core: true },
-                { title: "Advanced Cluster Management", badges: ["N"], sub: "Policy, ALM, config sync, metrics" },
-              ],
-            },
-            {
-              title: "Fleets — ACM Logical Fleet Management",
-              cells: [
-                { title: "{{LEGACY}} (Azure)", badges: ["3"], sub: "ACM Logical Fleet Management" },
-                { title: "Public Cloud", badges: ["N"], sub: "ACM Logical Fleet Management" },
-                { title: "Sovereign Cloud", badges: ["N"], sub: "ACM Logical Fleet Management" },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    "data-manager": {
-      title: "Data Manager — *L2*",
-      lead: "Ingestion, an open-table-format lakehouse, one federated query engine across clouds, and full data management.",
-      sections: [
-        {
-          type: "bands",
-          legend: LEGEND,
-          bands: [
-            {
-              title: "Data Movement & Ingestion",
-              cells: [
-                { title: "Data Integration", badges: ["N", "3", "D"], sub: "IDMC CAI + CDI (Informatica)", ref: "FR22, FR24, T163" },
-                { title: "Batch Ingestion", badges: ["N", "3", "D"], sub: "IDMC CDI (Informatica)", ref: "FR22, FR23, FR24, T163, T162" },
-                { title: "Streaming", badges: ["N", "3", "D"], sub: "OCI Streaming + Spark Structured Streaming / Apache Flink", ref: "FR22, FR23, FR24, T166" },
-                { title: "Change Data Capture", badges: ["N", "D"], sub: "IDMC CMI + Debezium (low-latency CDC, optional)", ref: "FR24, T163, T166" },
-              ],
-            },
-            {
-              title: "Data Lakehouse — Open Table Format",
-              cells: [
-                { title: "Storage", badges: ["N", "D", "3"], sub: "Apache Iceberg + OCI Object Storage (primary) + {{LEGACY}} ADLS Federation", ref: "T165" },
-                { title: "Table Management", badges: ["N"], sub: "Iceberg Catalog (Open REST) + OCI Streaming (streams land as iceberg tables)", ref: "FR29, T152, T159, T167, T168" },
-                { title: "Distributed Processing", badges: ["N"], sub: "Apache Spark", ref: "T170" },
-              ],
-            },
-            {
-              title: "Federated Query — One Engine Across DRCC + Azure + GCP",
-              note: "Primary recommendation Starburst: open Trino core (no lock-in), proven at enterprise scale, IDMC-catalog-aware, 50+ connectors, Databricks Unity Catalog supported, OPA supported. Alternative: IBM watsonx.data.",
-              cells: [
-                { title: "Federated Query Engine", badges: ["N", "3"], sub: "Starburst / watsonx.data", ref: "FR22, FR27, FR28, T163, T164, T165, T168, T169" },
-              ],
-            },
-            {
-              title: "Data Management — Catalog · Dictionary · MDM · Lineage · DQ · Audit",
-              cells: [
-                { title: "Catalog", badges: ["N", "D"], sub: "Informatica", ref: "FR26, FR29, T159-T161" },
-                { title: "Dictionary", badges: ["N", "D"], sub: "Informatica", ref: "FR26, FR29, T152, T162" },
-                { title: "MDM", badges: ["N", "D"], sub: "Informatica", ref: "T161, T152" },
-                { title: "Lineage", badges: ["N", "D"], sub: "Informatica", ref: "FR26, T155" },
-                { title: "Data Quality", badges: ["N", "D"], sub: "Informatica", ref: "T153, T154" },
-                { title: "Audit Logging", badges: ["N", "D"], sub: "Informatica", ref: "FR26, T160" },
-                { title: "3D Catalog", badges: ["N", "D"], sub: "ArcGIS", ref: "T158" },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    "ai-manager": {
-      title: "AI Manager — *L2*",
-      lead: "From AI workload requesters, through governance and key integrity, to GPU runtime, resource management and provisioning.",
-      sections: [
-        {
-          type: "bands",
-          legend: LEGEND,
-          bands: [
-            {
-              title: "AI Workload Requesters",
-              cells: [
-                { title: "Data Scientists", sub: "Notebooks" },
-                { title: "ML Engineers", sub: "Training Jobs" },
-                { title: "Developers", sub: "Inference APIs" },
-                { title: "RAG / Agents", sub: "LLM consumers" },
-              ],
-            },
-            {
-              title: "Governance & Policy (FR11, FR13, FR15) — Quotas, RBAC, RAI, Approvals",
-              cells: [
-                { title: "Identity & RBAC", badges: ["N", "D"], sub: "OCI IAM, Ping Identity" },
-                { title: "Policy Engine", badges: ["N"], sub: "OPA + Gatekeeper" },
-                { title: "Quota Mgmt", badges: ["N"], sub: "IBM Turbonomic / KAI Scheduler" },
-                { title: "RAI Approval", badges: ["N"], sub: "ServiceNow IRM / GRC" },
-                { title: "Pre-deploy Bias Check", badges: ["N"], sub: "IBM AIF 360 / Fairlearn" },
-              ],
-            },
-            {
-              title: "Model Key Lifecycle & Integrity (FR07–FR11)",
-              cells: [
-                { title: "Key Mgmt (FR07)", badges: ["N", "D"], sub: "OCI Vault" },
-                { title: "Key Lifecycle (FR08)", badges: ["N", "D"], sub: "OCI Vault rotation" },
-                { title: "Runtime Binding (FR09)", badges: ["N", "D"], sub: "OCI Vault & envelope encryption" },
-                { title: "Artifact Integrity (FR10)", badges: ["N", "D"], sub: "Sigstore (cosign) + Harbor" },
-                { title: "Key Policy (FR11)", badges: ["N", "D"], sub: "OPA + OCI Vault IAM policies" },
-              ],
-            },
-            {
-              title: "GPU Runtime, Resource Management & Provisioning (FR12–FR17)",
-              cells: [
-                { title: "GPU Pool (FR12)", badges: ["N"], sub: "KAI Scheduler / HAMi (OSS)" },
-                { title: "Quota (FR13)", badges: ["N"], sub: "K8s ResourceQuota / Kueue" },
-                { title: "Capacity Monitoring (FR14)", badges: ["3", "N"], sub: "Dynatrace + Prometheus + OpenTelemetry" },
-                { title: "Placement (FR16)", badges: ["N"], sub: "KAI Scheduler" },
-                { title: "Provisioning (FR17)", badges: ["N"], sub: "Crossplane + Argo Workflows" },
-                { title: "Training Pipelines", badges: ["N"], sub: "Kubeflow + Ray" },
-                { title: "Inference Serving", badges: ["3", "N"], sub: "KServe + vLLM" },
-                { title: "MLOps Tracking (FR14)", badges: ["3", "N"], sub: "MLflow / OpenTelemetry" },
-                { title: "Capacity Optimization", badges: ["N"], sub: "IBM Turbonomic / HAMi (OSS)" },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  },
 
   footer: "Confidential — prepared for {{CLIENT}}.",
 };

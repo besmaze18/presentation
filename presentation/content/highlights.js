@@ -20,7 +20,7 @@
 window.CONTENT = {
   title: "Our *Vision*",
   subtitle:
-    "A custom-built solution, designed and developed for {{COUNTRY}}'s specific requirements — told in three moves.",
+    "A custom-built solution, designed and developed for {{COUNTRY}}'s specific requirements.",
 
   views: [
     /* ============================================================ 01 */
@@ -29,9 +29,55 @@ window.CONTENT = {
       label: "Vision Entry",
       title: "We design, build and transfer a *purpose-built AI platform*",
       lead:
-        "We propose a custom-built solution, designed and developed for {{COUNTRY}}'s specific requirements — engineered to our QORE reference architecture and assembled from leading open-source AI, ML and agentic frameworks.",
+        "We propose a custom-built solution for {{COUNTRY}}, engineered to our QORE reference architecture and assembled from leading open-source AI, ML and agentic frameworks.",
 
       sections: [
+        /* The stack comes first: the picture carries the argument, and the
+           prose underneath explains it. Three capability hubs sit under one
+           front door; QORE is the portable layer beneath them; the platform
+           is the foundation beneath that. */
+        {
+          type: "bands",
+          bands: [
+            {
+              title: "Platform OS — unified entry for all {{LEGACY}} 2.0 offerings",
+              cells: [
+                {
+                  title: "Cognitive AI",
+                  sub: "Capability Hub",
+                  ref: "In scope for this programme",
+                },
+                { title: "Digital Twin", sub: "Capability Hub" },
+                { title: "iCCC", sub: "Capability Hub" },
+              ],
+            },
+            {
+              title: "QORE — the portable orchestration layer",
+              color: "dark",
+              note:
+                "Built once. Serves as the flexible product foundation of every {{LEGACY}} 2.0 offering.",
+              cells: [
+                {
+                  title: "Foundation SDK",
+                  sub:
+                    "Fills the portable orchestration layer — built for Cognitive AI, iCCC and Digital Twin, integrated with {{LEGACY}}, and extended as new capability hubs and products arrive.",
+                },
+              ],
+            },
+            {
+              title: "{{PLATFORM}} — the foundation",
+              color: "gold",
+              cells: [
+                {
+                  title: "Infrastructure, services and connectivity",
+                  sub:
+                    "Supports QORE. QORE is deployed to maximise use of {{LEGACY}} functionality where possible, and builds up from this solid foundation.",
+                },
+              ],
+            },
+          ],
+        },
+
         {
           section: "What {{COUNTRY}} gets",
           type: "tags",
@@ -52,45 +98,6 @@ window.CONTENT = {
             "Built from the ground up for {{COUNTRY}}'s requirements rather than adapted from a commercial product, it runs on open standards and standard Kubernetes, so it is tied to no hyperscaler and no vendor roadmap.",
             "Source code and IP vest in {{XXXX}} in full. Component selections are validated with {{XXXX}} during Discovery & Design against jointly agreed criteria.",
           ],
-        },
-
-        {
-          section: "Built once, reused across every {{LEGACY}} 2.0 offering",
-          lead:
-            "Platform OS is the unified entry point. QORE is the foundation SDK beneath it, and {{PLATFORM}} is the infrastructure beneath that — one foundation serving three capability hubs.",
-          type: "stack",
-          provider: {
-            title: "Platform OS — unified entry for all {{LEGACY}} 2.0 offerings",
-            rows: [
-              {
-                items: [
-                  { title: "Cognitive AI", sub: "Capability Hub — in scope" },
-                  { title: "Digital Twin", sub: "Capability Hub" },
-                  { title: "iCCC", sub: "Capability Hub" },
-                ],
-              },
-              {
-                type: "bar",
-                title: "QORE",
-                sub:
-                  "Foundation SDK that fills the portable orchestration layer — built for Cognitive AI, iCCC and Digital Twin, integrated with {{LEGACY}}, and extended as new capability hubs and products arrive.",
-              },
-              {
-                type: "bar",
-                gold: true,
-                title: "{{PLATFORM}}",
-                sub:
-                  "Foundation infrastructure, services and connectivity to support QORE. QORE is deployed to maximise use of {{LEGACY}} functionality where possible and builds up from this solid foundation.",
-              },
-            ],
-          },
-        },
-
-        {
-          type: "panel",
-          title: "Built once.",
-          subtitle:
-            "QORE serves as the flexible product foundation of every {{LEGACY}} 2.0 offering — so the second and third capability hubs cost a fraction of the first.",
         },
       ],
     },
@@ -153,53 +160,6 @@ window.CONTENT = {
                 "Enablers built once, reused",
               ],
             },
-          ],
-        },
-      ],
-    },
-
-    /* ============================================================ 03 */
-    {
-      id: "architecture",
-      label: "The Architecture",
-      title: "The *Architecture*",
-      lead:
-        "Our proposed solution is built for {{COUNTRY}}, owned by {{COUNTRY}}, and seamlessly integrates with every {{LEGACY}} 2.0 offering — portable by design.",
-
-      sections: [
-        {
-          type: "stack",
-          provider: {
-            title: "Platform OS — unified front door for {{LEGACY}} 2.0 offerings",
-            rows: [
-              {
-                items: [
-                  { title: "Cognitive AI", sub: "Capability Hub" },
-                  { title: "Digital Twin", sub: "Capability Hub" },
-                  { title: "iCCC", sub: "Capability Hub" },
-                ],
-              },
-              {
-                type: "bar",
-                title: "QORE — portable orchestration layer",
-                sub: "Open-source SDK, standard Kubernetes, no hyperscaler lock-in.",
-              },
-              {
-                type: "bar",
-                gold: true,
-                title: "{{PLATFORM}} — sovereign foundation",
-                sub: "Infrastructure, services and connectivity, maximising reuse of {{LEGACY}}.",
-              },
-            ],
-          },
-        },
-
-        {
-          section: "Still to add",
-          type: "text",
-          body: [
-            "The source slide for this section was cut off in the material supplied, so only its title, opening statement and the Platform OS band above could be transcribed.",
-            "Send the rest of the architecture slide and this sub-tab will be completed. Everything below the Platform OS band — the layer detail, the reuse badges and the component names — is missing.",
           ],
         },
       ],

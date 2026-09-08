@@ -11,7 +11,6 @@
    and the window.PAGE_ID set by the content file. `file` is the html file. */
 const PAGES = [
   { id: "open",           label: "Open",            file: "open.html" },
-  { id: "understanding",  label: "Our Understanding", file: "our-understanding.html" },
   { id: "highlights",     label: "Our Vision",      file: "highlights.html" },
   { id: "solution",       label: "Solution",        file: "solution.html" },
   { id: "demo",           label: "Demo",            file: "demo.html" },
