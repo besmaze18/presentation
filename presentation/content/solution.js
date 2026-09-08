@@ -5,13 +5,10 @@
    slide; click it, or link straight to it with a hash in the address bar,
    e.g.  solution.html#proposed
 
-     1. Platform Provider      the relationship model behind the platform
-     2. The Architecture       the four layers, before any product names
-     3. GCP at the Heart       why Google Cloud anchors the engine layer
-     4. QORE                   what is built once and reused three times
-     5. Proposed Architecture  the same stack with every component named
-     6. The Journey            animated provisioning walkthrough, ending on
-                               the "built at scale" bridge into the demos
+     1. The Architecture       the four layers, before any product names
+     2. GCP at the Heart       why Google Cloud anchors the engine layer
+     3. QORE                   what is built once and reused three times
+     4. Proposed Architecture  the same stack with every component named
 
    In the architecture views, click any coloured layer header to collapse
    or expand that layer — useful for taking one layer at a time in the room.
@@ -26,75 +23,11 @@
 
 window.CONTENT = {
   title: "High Level *Solution*",
-  subtitle: "From the platform-provider relationship, through the four architectural layers and the engine beneath them, to the full component-level architecture.",
+  subtitle: "From the four architectural layers and the engine beneath them, through what QORE reuses across all three offerings, to the full component-level architecture.",
 
   /* -------------------------------------------------- top-level views */
   views: [
-    {
-      id: "provider",
-      label: "Platform Provider",
-      title: "Being a platform provider isn't just about the *technology*",
-      lead: "The relationship model behind the platform — click the Operating Model bar to expand the full operating model Deloitte will invest in.",
-      sections: [
-        {
-          type: "providermodel",
-          diagram: {
-            consumers: { title: "Service Consumers", boxes: ["Gov", "Devs"] },
-            facing: "Customer Facing Services & Platform OS",
-            provider: { title: "Platform Provider", layers: ["Operating Model", "{{PLATFORM}}"] },
-            external: [
-              { title: "External Service Providers", box: "Services" },
-              { title: "External Service Providers", box: "Services" },
-            ],
-          },
-          notes: [
-            "**Service Consumers** maintain a business relationship with, and utilise the services provided by, the **Platform Provider**.",
-            "As the number of involved parties in delivering services to a consumer increases, so does the necessity for collaboration. The focus is no longer solely on the one-way relationship between a service provider and consumer, but rather on a network of interconnected relationships that must collaborate to deliver customer service.",
-            "**External service providers** operate with their own commercial interests and drivers, which may conflict with the objectives of the consumer and other service providers.",
-            "Deloitte's framework establishes distinct roles and responsibilities, as well as effective governance and control, which are essential in a multi-service-provider environment. Without these, a culture may emerge where issues lack clear ownership, potentially leading to client dissatisfaction.",
-            "The role of the **Platform Provider** is critical in the delivery of these services, and the implementation of this framework.",
-          ],
-          operatingModel: {
-            title: "Deloitte will invest in developing the *operating model*",
-            rows: [
-              {
-                panels: [
-                  { title: "End Users", w: 3, cells: ["Government Entities", "Government Affiliates", "Education & Research"] },
-                  { title: "Enablers", w: 3, cells: ["Data Center Providers", "Hyperscalers and CSPs", "Strategic Partners"] },
-                  { title: "Regulators", w: 1.3, cells: ["Regulatory Bodies"] },
-                ],
-              },
-              {
-                panels: [
-                  { title: "Advisory Services", w: 2, cells: ["Architecture and Design Services", "Ideation and Proof of Concept Service"] },
-                  { title: "Build Services", w: 2, cells: ["Development & Integration Services", "Model Acceleration and Optimization"] },
-                  { title: "X-As-A-Service", w: 3, cells: ["IaaS, PaaS & SaaS Services", "Model Vault", "Telemetry & Insights"] },
-                ],
-              },
-              {
-                tag: "Services",
-                panels: [
-                  { title: "Plan & Manage", w: 2, cells: ["Demand & Execution Management", "Financial Planning & Resource Mgt.", "Innovation & Talent"] },
-                  { title: "Engineering", w: 2, cells: ["Solution Development", "Model Deployment & MLOps", "Infrastructure, Platform & DevOps Engineering"] },
-                  { title: "Operate & Optimize", w: 2, cells: ["Model Performance & Risk Management", "Infrastructure Operations", "Service Management & Security"] },
-                ],
-              },
-              {
-                tag: "Functions",
-                panels: [
-                  { title: "Plan & Manage", w: 2, cells: ["Demand & Execution Management", "Financial Planning & Resource Mgt.", "Strategy & governance", "Innovation & Talent"] },
-                  { title: "Engineering", w: 2, cells: ["Solution Development", "Model Deployment & MLOps", "Infrastructure, Platform & DevOps Engineering"] },
-                  { title: "Operate & Optimize", w: 2, cells: ["Model Performance & Risk Management", "Infrastructure Operations", "Monitoring & System Reliability", "Service Management & Security"] },
-                ],
-              },
-            ],
-            footer: ["Governance & Business Operations", "Service Management", "Infrastructure Operations", "Platform & Solution Engineering"],
-          },
-        },
-      ],
-    },
-
-    /* ------------------------------------------------------------------ 2
+    /* ------------------------------------------------------------------ 1
        The architecture in four layers — the shape of the whole solution
        before any component names appear. */
     {
@@ -168,7 +101,7 @@ window.CONTENT = {
       ],
     },
 
-    /* ------------------------------------------------------------------ 3
+    /* ------------------------------------------------------------------ 2
        Why Google Cloud sits at the bottom of that stack. */
     {
       id: "gcp",
@@ -226,7 +159,7 @@ window.CONTENT = {
       ],
     },
 
-    /* ------------------------------------------------------------------ 4
+    /* ------------------------------------------------------------------ 3
        QORE — what is built once and reused across all three offerings. */
     {
       id: "qore",
@@ -273,7 +206,7 @@ window.CONTENT = {
       ],
     },
 
-    /* ------------------------------------------------------------------ 5
+    /* ------------------------------------------------------------------ 4
        The same architecture with every component named. Layer headers
        collapse, so you can open one layer at a time in the room. */
     {
@@ -402,103 +335,6 @@ window.CONTENT = {
             "Where multiple technology options are shown, the preferred option will be confirmed with {{XXXX}} & {{YYYY}} during Discovery & Design against jointly agreed evaluation criteria.",
             "The sovereign infrastructure runs the full QORE serving and training components — gateway, LLM, KServe/vLLM, LangGraph and MCP server, MLflow/Postgres registry, OPA, OTel, Argo CD and the Kubeflow/Argo training stack. Commerce and discovery stay central in GCP with metadata-only federation.",
           ],
-        },
-      ],
-    },
-    /* ---------------------------------------------------------------- 4
-       The provisioning & deployment journey — an animated walkthrough of a
-       real request travelling through the platform. Press Play, or step
-       with ← / →. Edit the steps and blocks below to change the story. */
-    {
-      id: "journey",
-      label: "The Journey",
-      title: "The Provisioning *Journey*",
-      lead: "Watch a real provisioning request travel through the platform — every block lights up as its tool activates, from self-service request to a live workload inside the sovereign boundary.",
-      sections: [
-        {
-          type: "journey",
-          /* Default visualization: "video" (the embedded software-stack flow
-             video), "network", "arch", "flow" or "orbit". */
-          defaultViz: "video",
-          /* VIDEO tab — export your Figma "Software Stack" flow to a video and
-             drop it in assets/video, then set the path between the quotes:
-                 src: "assets/video/software-stack.mp4"
-             Leave src empty to show a placeholder. */
-          video: {
-            src: "" /* "assets/video/software-stack.mp4" */,
-            poster: "" /* optional still image, e.g. "assets/img/stack-poster.jpg" */,
-            caption: "The software-stack provisioning flow — from request to a live, sovereign workload.",
-          },
-          final: "Environment live — monitored, cost-tagged, fully inside the sovereign boundary.",
-          /* Each block can carry an icon. Available names: portal, approve,
-             gateway, shield, stream, ticket, eye, coins, plan, git, ai,
-             gear, container, key. */
-          layers: [
-            {
-              id: "os", label: "Platform OS — unified digital front", color: "maroon",
-              blocks: [
-                { id: "b-self", icon: "portal", title: "Self-Service Portal", sub: "RHDS / Backstage — catalog & blueprints" },
-                { id: "b-approve", icon: "approve", title: "Approval Workflow", sub: "Request → entitlement → approve" },
-              ],
-            },
-            {
-              id: "int", label: "Integration Layer & APIs", color: "blue",
-              blocks: [
-                { id: "b-gw", icon: "gateway", title: "API Gateway", sub: "IBM Connect — identity & routing" },
-                { id: "b-policy", icon: "shield", title: "Policy Enforcement", sub: "OPA — residency & guardrails" },
-                { id: "b-events", icon: "stream", title: "Event Streaming", sub: "OCI Streaming — provisioning events" },
-              ],
-            },
-            {
-              id: "cc", label: "Control Centre", color: "teal",
-              blocks: [
-                { id: "b-itsm", icon: "ticket", title: "ITSM", sub: "Symphony — change record" },
-                { id: "b-obs", icon: "eye", title: "Observability", sub: "Dynatrace — attach monitoring" },
-                { id: "b-finops", icon: "coins", title: "FinOps", sub: "IBM Turbonomic — cost tagging" },
-              ],
-            },
-            {
-              id: "orch", label: "Orchestration & Manager Layer", color: "plum",
-              blocks: [
-                { id: "b-wm", icon: "plan", title: "Workload Manager", sub: "Blueprint → deployment plan" },
-                { id: "b-gitops", icon: "git", title: "GitOps", sub: "Argo — declarative commit & sync" },
-                { id: "b-aim", icon: "ai", title: "AI Manager", sub: "Model registry & guardrails" },
-              ],
-            },
-            {
-              id: "core", label: "IBM Sovereign Core — on Oracle DRCC", color: "navy",
-              blocks: [
-                { id: "b-acm", icon: "gear", title: "ACM + Ansible", sub: "Cluster mgmt & automation" },
-                { id: "b-ocp", icon: "container", title: "OpenShift", sub: "Workload runs inside the boundary" },
-                { id: "b-evd", icon: "key", title: "Identity · Keys · Evidence", sub: "Audit-grade logging" },
-              ],
-            },
-          ],
-          /* `tech` lists the technologies each step activates — shown as
-             satellite nodes in the Network view. Use the SAME name for a
-             technology used by several steps and it becomes one shared node
-             linking those steps together. */
-          steps: [
-            { block: "b-self", layer: "os", tag: "Step 1 · Request", title: "Self-Service Portal", tech: ["RHDS (Backstage)", "Software Catalog", "Golden-Path Templates"], body: "A ministry user picks the \"GPU AI Environment\" blueprint from the catalog — sovereign-only, dev tier." },
-            { block: "b-approve", layer: "os", tag: "Step 2 · Approve", title: "Approval Workflow", tech: ["Backstage RBAC", "Okta + Ping", "ServiceNow"], body: "Entitlement validated; the tenant owner approves in one click. Guardrails already narrowed choices to compliant options." },
-            { block: "b-gw", layer: "int", tag: "Step 3 · Route", title: "API Gateway — IBM Connect", tech: ["IBM API Connect", "OpenShift Service Mesh"], body: "The request enters the platform: authenticated, authorized, routed. Identity enforced at the edge." },
-            { block: "b-policy", layer: "int", tag: "Step 4 · Enforce", title: "Policy — OPA", tech: ["OPA / Gatekeeper", "OCI IAM"], body: "Residency and security policy evaluated as code. DRCC-only placement confirmed before anything is built." },
-            { block: "b-itsm", layer: "cc", tag: "Step 5 · Record", title: "ITSM — Symphony", tech: ["ServiceNow", "Symphony AI"], body: "A change record opens automatically — full traceability, no human ticketing." },
-            { block: "b-wm", layer: "orch", tag: "Step 6 · Plan", title: "Workload Manager", tech: ["Red Hat ACM", "KAI Scheduler", "Kueue"], body: "The blueprint becomes a concrete deployment plan: clusters, namespaces, GPU pool, quotas." },
-            { block: "b-gitops", layer: "orch", tag: "Step 7 · Commit", title: "GitOps — Argo", tech: ["Argo CD", "GitLab", "Harbor"], body: "The plan is committed declaratively. Argo syncs desired state — every change versioned and auditable." },
-            { block: "b-acm", layer: "core", tag: "Step 8 · Automate", title: "ACM + Ansible", tech: ["Ansible", "Red Hat ACM", "Terraform"], body: "Sovereign Core takes over: cluster management and automation execute the deployment on DRCC." },
-            { block: "b-ocp", layer: "core", tag: "Step 9 · Run", title: "OpenShift", tech: ["OpenShift", "Oracle DRCC", "OCI Vault"], body: "The workload starts inside the sovereign boundary. It never leaves. Evidence and keys logged natively." },
-            { block: "b-events", layer: "int", tag: "Step 10 · Notify", title: "Event Streaming", tech: ["OCI Streaming", "IBM Streaming"], body: "Provisioning events stream back through the platform — the user watches progress live in the portal." },
-            { block: "b-obs", layer: "cc", tag: "Step 11 · Observe", title: "Observability — Dynatrace", tech: ["Dynatrace", "OpenTelemetry"], body: "Monitoring attaches automatically. Tenant-scoped dashboards from second one." },
-            { block: "b-finops", layer: "cc", tag: "Step 12 · Meter", title: "FinOps — Turbonomic", tech: ["IBM Turbonomic", "KubeTurbo"], body: "Cost tagging and optimization active — transparent pricing back to the consuming entity." },
-          ],
-        },
-        {
-          type: "cta",
-          href: "demo.html",
-          title: "This architecture isn't just coloured blocks — we have *built it at scale*, for ourselves.",
-          body: "The Engineering Platform, OpenCloud and AI Core already run in production today — and our vision of the {{PLATFORM}} journey has AI embedded in everything. See them working.",
-          label: "Watch the demos →",
         },
       ],
     },

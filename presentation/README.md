@@ -144,10 +144,10 @@ these are **pop-up** views. Any `band`, band `group`, or cell with
 `detail: "id"` becomes clickable and opens that pop-up over the page (close
 with ✕, Esc, or by clicking outside).
 
-**Solution** (`content/solution.js`) uses six sub-tabs — Platform Provider →
-The Architecture → GCP at the Heart → QORE → Proposed Architecture → The
-Journey. In the two architecture sub-tabs, clicking a coloured layer header
-collapses or expands that layer, so you can take one layer at a time.
+**Solution** (`content/solution.js`) uses four sub-tabs — The Architecture →
+GCP at the Heart → QORE → Proposed Architecture. In the two architecture
+sub-tabs, clicking a coloured layer header collapses or expands that layer,
+so you can take one layer at a time.
 
 ### Fixed columns
 Add `cols: 2` (or 3 / 4) to a `cards` or `columns` block to force that many
