@@ -1,66 +1,167 @@
 /* =====================================================================
-   OUR EXPERIENCE  —  "We have done this before" credentials.
-   Add a photo with  image: "assets/img/giga.jpg" (else a placeholder tile).
-   In the body text, wrap stats/numbers in **double asterisks** to bold them.
+   OUR EXPERIENCE  —  three sub-tabs, one per source slide:
+
+     Case Studies        four engagements, with results
+     Google Partnership  the 360 partnership and what it gives this bid
+     Worldwide Leaders   analyst recognition
+
+   In the `credentials` block, `body` accepts **double stars** around a
+   phrase to bold it — that is where the numbers should go, so the eye
+   lands on the result rather than the narrative.
+
+   `image` is optional: put a file in assets/img/ and reference it as
+   "assets/img/name.jpg". Left empty, the card shows a placeholder panel.
+
+   {{XXXX}} is the delivery partner name, set once in content/config.js.
    ===================================================================== */
 window.CONTENT = {
   title: "We have done this *before*",
-  subtitle: "A select group of examples are showcased here — we will be happy to share more.",
-  sections: [
+  subtitle:
+    "A select group of examples are showcased here — we will be happy to share more.",
+
+  views: [
+    /* ============================================================== 01 */
     {
-      type: "credentials",
-      items: [
+      id: "cases",
+      label: "Case Studies",
+      /* The page heading above already says "We have done this before", so this
+         sub-tab heading says something the audience does not already have. */
+      title: "Selected *engagements*",
+      lead:
+        "Four examples across government, sovereign funds, industry and insurance — we will be happy to share more.",
+
+      sections: [
         {
-          image: "" /* e.g. "assets/img/photo.jpg" */,
-          title: "GCC Tax and Customs Authority",
-          subtitle: "National E-Invoicing Solution",
-          tags: ["Workload Manager", "Control Centre", "DevX Toolkit"],
-          body: "Deloitte supported the Authority from market scan through implementation of a national-scale E-Invoicing platform, drawing on leading country practices and global technology solutions. The platform acts as the core portal and access point for businesses, supporting e-invoice validation, digital signature, QR referencing and national database integration. Built for high-volume government operations, the solution handles **~45M invoices per day**, **~1,000 invoices per second**, **~2B monthly transactions**, **<100ms response time**, **200K onboarded taxpayers**, and a distributed architecture of **85 microservices**, **900+ containers** and **150+ databases**.",
+          type: "credentials",
+          items: [
+            {
+              image: "" /* e.g. "assets/img/uae-authority.jpg" */,
+              title: "UAE Government Authority",
+              subtitle: "Internal Enterprise Agentic AI Platform",
+              tags: ["AI Toolkit & Sandbox", "MLOps"],
+              body:
+                "{{XXXX}} designed and is implementing an **internal enterprise agentic AI platform** for a UAE government entity to enable employees to embed AI into their daily work. {{XXXX}} defined the platform vision, governance model and implementation roadmap, and developed a cloud-integrated solution that **enables employees to access purpose-built AI agents and create custom agents using internal data, approved LLM models and internal templates**. The first version of the platform has reached launch stage, with **400+ signups** and a planned scale-up to **more than 2,000 employees**.",
+            },
+            {
+              image: "" /* e.g. "assets/img/sovereign-fund.jpg" */,
+              title: "Sovereign Wealth Fund",
+              subtitle: "Enterprise MLOps Enablement",
+              tags: ["MLOps"],
+              body:
+                "{{XXXX}} migrated a client's open-source machine learning models (Python and R) onto an **enterprise data science platform**, introduced stronger **MLOps practices** to replace manual model management, and ran **enablement workshops to build business-user trust and adoption**. Across forecasting, investment and HR analytics use cases, the initiative **improved development and deployment turn-around times** and delivered a **17% reduction in employee churn** and a **23% reduction in forecasting margin of error** for raw materials planning.",
+            },
+            {
+              image: "" /* e.g. "assets/img/smart-township.jpg" */,
+              title: "Industrial Manufacturing Company",
+              subtitle: "Enterprise AI and data platform for a smart township",
+              tags: ["MLOps"],
+              body:
+                "Supported establishing a Google Cloud-based data and AI foundation to enable Malaysia's first fully integrated smart and sustainable green township. We enabled the development of **smart-city use cases, including smart parking, cashless payments, energy management and AI-driven security**, while implementing scalable cloud-native architecture to accelerate rollout of new digital services and support the company's data-driven transformation.",
+            },
+            {
+              image: "" /* e.g. "assets/img/insurance-group.jpg" */,
+              title: "Leading European Insurance Group",
+              subtitle: "Agentic AI powered Customer Service Transformation",
+              tags: ["AI Toolkit & Sandbox"],
+              body:
+                "{{XXXX}} and Google helped improve customer service after a post-pandemic surge in inquiries and claims. Using Google Document AI, Gemini and Vertex AI, they **built an intelligent assistant that helps agents answer complex health insurance questions** faster and more accurately. The result was a **30% faster information search**, a **drop in escalations from 27% to 3%**, and a **doubling of NPS within one year**.",
+            },
+          ],
         },
+      ],
+    },
+
+    /* ============================================================== 02 */
+    {
+      id: "partnership",
+      label: "Google Partnership",
+      title: "{{XXXX}} & Google *Partnership*",
+      lead:
+        "A 360° partnership — we go farther, faster, together.",
+
+      sections: [
         {
-          image: "" /* e.g. "assets/img/photo.jpg" */,
-          title: "UK Home Office",
-          subtitle: "Immigration Transformation",
-          tags: ["Platform OS", "Control Centre"],
-          body: "Deloitte is supporting the UK Home Office's immigration technology transformation by delivering and evolving Access UK — a global platform that digitizes **more than 130 visa types**, replaces paper-based processes and drives back-office operational change. The program runs as a live, continuously improving product using microservices and event-driven architecture, plus a mature release pipeline with **daily deployments**. Outcomes include a stable, scalable service used by **29M+ applicants**, faster delivery of urgent policy responses, improved fraud/abuse controls, **1,000+ production changes** and a **42%+ reduction in infrastructure costs**.",
+          section: "The partnership in numbers",
+          type: "columns",
+          cols: 4,
+          items: [
+            { title: "1,000 +", body: "Engagements over the past 5+ years" },
+            { title: "44K +", body: "Global Data & AI specialists" },
+            { title: "10K +", body: "Global certifications" },
+            { title: "$2B", body: "Investment in AI, Cloud & Cyber" },
+            { title: "100 +", body: "Unique global clients" },
+            { title: "330 +", body: "AI & agentic AI assets in agent fleet" },
+            { title: "47 +", body: "Countries served" },
+          ],
         },
+
         {
-          image: "" /* e.g. "assets/img/photo.jpg" */,
-          title: "Global Media Company",
-          subtitle: "Integrated European Cloud & Cyber Managed Services Transformation",
-          tags: ["Control Centre", "Platform OS", "Security", "Adapters & Connectors"],
-          body: "A global media company partnered with Deloitte to architect, build and operate an integrated Azure cloud and cyber managed service to support the closure of **14 European data centers** while reducing operational risk. Deloitte delivered a secure, scalable hub-and-spoke Azure platform covering scoping, assessment, business case, architecture, build and ongoing operations — alongside **24x7 security monitoring** with real-time triage and a vulnerability management platform — enabling pan-European services, faster severity-based incident response and continuous reduction of cyber exposure.",
+          section: "{{XXXX}}: AI market leader, Google AI stack expertise",
+          type: "cards",
+          cols: 3,
+          items: [
+            {
+              num: "01",
+              title: "Expertise on the Google AI Stack",
+              body:
+                "330+ agents and 15+ Gemini Enterprise connectors built through deep co-innovation with Google.",
+            },
+            {
+              num: "02",
+              title: "Scaled Implementation Experience",
+              body:
+                "Implemented AI-enabled solutions for 100+ clients using Google services and tailored offerings.",
+            },
+            {
+              num: "03",
+              title: "Value-Driven Transformation",
+              body:
+                "A structured, value-led approach backed by agentic rollout accelerators that turn agents from cost centres into value drivers.",
+            },
+            {
+              num: "04",
+              title: "Deep Industry & Domain Expertise",
+              body:
+                "Sector-specific expertise, combined with targeted domain depth across sales, marketing, IT, HR and Finance.",
+            },
+            {
+              num: "05",
+              title: "Grounded in Ethical & Trustworthy AI",
+              body:
+                "{{XXXX}}'s Trustworthy AI Framework embeds technical guardrails, risk mitigation, explainability and security into every deployment.",
+            },
+          ],
         },
+      ],
+    },
+
+    /* ============================================================== 03 */
+    {
+      id: "leaders",
+      label: "Worldwide Leaders",
+      title: "Worldwide *Leaders*",
+      lead:
+        "{{XXXX}} have consistently led the category for worldwide leader in custom software development.",
+
+      sections: [
         {
-          image: "" /* e.g. "assets/img/photo.jpg" */,
-          title: "Adevinta / eBay Classifieds",
-          subtitle: "Empowering Cloud Transformation",
-          tags: ["Multi-cloud", "Platform OS", "Workload Manager"],
-          body: "After Adevinta's acquisition of eBay Classifieds Group, Deloitte helped define a group-wide cloud strategy across **six business units** spanning AWS, GCP and a large private-cloud estate, and ran a competitive procurement. Deloitte then led discovery and migration planning for **3,000+ services** across **28,000+ workloads**, mobilizing a **200+ person** pan-European team to accelerate delivery through a cloud landing zone, reusable common solutions and 'hit squad' support — establishing a clear target roadmap and governance, faster cloud adoption and the program's synergy-savings objectives.",
+          type: "text",
+          body: [
+            "We have been recognised as a worldwide leader, including in the 2026 Gartner Magic Quadrant.",
+          ],
         },
+
         {
-          image: "" /* e.g. "assets/img/photo.jpg" */,
-          title: "Global Pharmaceutical Company",
-          subtitle: "Control Tower and Front-end Build",
-          tags: ["Platform OS", "Control Centre", "AI Manager", "Data Manager"],
-          body: "Deloitte partnered with a global pharmaceutical company to design and build the front end of an Operations Control Tower — a bespoke executive platform that consolidates critical KPIs into a holistic, near-real-time view across **~35 global sites**. Delivered through **agile two-week sprints**, the solution introduced a modern UI (design system, component library), rich data visualization with grid/graph switching, **monthly releases** and multiple production deployments, and an integrated AI-driven assistant (ask/agent modes) to surface trends and support predictive insights and recommended actions.",
-        },
-        {
-          image: "" /* e.g. "assets/img/photo.jpg" */,
-          title: "Giga Project in the GCC",
-          subtitle: "Designing, Building & Operating a Command & Control Center",
-          tags: ["Control Centre", "AI Manager", "Data Manager"],
-          body: "The client is preparing to manage **50 million annual visitors**. We designed and implemented an intelligent Command Center integrating real-time observability, AI-driven automation, and centralized coordination across all operational domains. The solution consolidates data from infrastructure, applications, security systems and IoT devices into a single command view, enabling proactive incident detection and rapid response. Results include up to **70% reduction in incident resolution times** and **50% reduction in unplanned downtime**.",
-        },
-        {
-          image: "" /* e.g. "assets/img/photo.jpg" */,
-          title: "UAE Government Authority",
-          subtitle: "National Unified AI & Data Platform",
-          tags: ["Data Manager", "Platform OS", "Knowledge Hub", "Adapters & Connectors"],
-          body: "Deloitte designed and implemented a **national large-scale data Lakehouse** to establish modern data capabilities for a UAE government entity. Deloitte assessed the existing data platform and capabilities, designed the target architecture, migration plan and operating model, and developed the end-to-end unified data platform. The platform enabled the client to adopt modern data capabilities and best practices such as data federation, open-table format, multi-tenancy, DataOps and data governance — moving towards an integrated, scalable data ecosystem to support its broader digital transformation ambitions.",
+          section: "Still to add",
+          type: "text",
+          body: [
+            "The source slide for this section was cut off in the material supplied — only its title, the opening statement and the first words of the recognition line were legible.",
+            "Send the rest of the slide and this sub-tab will be completed: the full list of analyst recognitions, the quadrant graphic and any accompanying quotes are all missing.",
+          ],
         },
       ],
     },
   ],
+
   footer: "Confidential — prepared for {{CLIENT}}.",
 };

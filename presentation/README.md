@@ -130,8 +130,14 @@ the slides, move the blocks; to rename a sub-tab, change its `label`. The
 active view is kept in the address bar, so `highlights.html#principles` opens
 that sub-tab directly — useful for jumping straight to a slide mid-meeting.
 
-**Our Vision** (`content/highlights.js`) uses two sub-tabs: Vision Entry →
-Solution Principles.
+Three tabs use sub-tabs today:
+
+**Our Vision** (`content/highlights.js`) — Vision Entry → Solution Principles.
+
+**Timeline** (`content/timeline.js`) — Our Approach → Project Timeline.
+
+**Our Experience** (`content/our-experience.js`) — Case Studies → Google
+Partnership → Worldwide Leaders.
 
 A content file can also define `details: { "id": { title, lead, sections } }` —
 these are **pop-up** views. Any `band`, band `group`, or cell with
