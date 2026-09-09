@@ -1612,3 +1612,18 @@ body[data-page="open"] .team-card__role { font-size: .95rem; }
 @media (max-width: 720px) {
   .hub__grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* An image slot with no file yet, or a path that did not resolve. */
+.img-placeholder {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 28px;
+  background: repeating-linear-gradient(45deg, #f3ecee, #f3ecee 12px, #efe6e9 12px, #efe6e9 24px);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}

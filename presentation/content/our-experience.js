@@ -152,19 +152,54 @@ window.CONTENT = {
 
       sections: [
         {
-          type: "text",
-          body: [
-            "We have been recognised as a worldwide leader, including in the 2026 Gartner Magic Quadrant.",
+          type: "supportbar",
+          title:
+            "Recognised as worldwide leaders for custom software development in 2023, 2024 and 2025",
+          body: "The 2026 Gartner Magic Quadrant is yet to be released.",
+        },
+
+        /* Two short cards side by side; the long recognition narrative runs
+           full width underneath rather than stretching two near-empty cards
+           beside it. */
+        {
+          type: "cards",
+          cols: 2,
+          items: [
+            {
+              num: null,
+              title: "Industry Recognition",
+              body:
+                "Our efforts are consistently recognised by leading industry analysts including Gartner, IDC and Forrester, validating our strategic vision and execution excellence. These independent third-party validations provide customers with assurance of quality, innovation and proven delivery capability.",
+            },
+            {
+              num: null,
+              title: "2025 Worldwide Leader",
+              body: [
+                "\u201CDeloitte\u2019s current and future focus is to help clients transform their businesses by providing comprehensive CSD services, leveraging deep industry expertise to deliver tailored solutions and measurable business outcomes.\u201D",
+                "\u2014 Gartner, 2025 Magic CSD Quadrant extract",
+              ],
+            },
           ],
         },
 
         {
-          section: "Still to add",
+          section: "Worldwide Leaders three years straight",
           type: "text",
           body: [
-            "The source slide for this section was cut off in the material supplied — only its title, the opening statement and the first words of the recognition line were legible.",
-            "Send the rest of the slide and this sub-tab will be completed: the full list of analyst recognitions, the quadrant graphic and any accompanying quotes are all missing.",
+            "We have been recognised as the Leader in the Gartner\u00AE Magic Quadrant\u2122 for Custom Software Development Services, Worldwide since 2023. This prestigious designation places Deloitte as the top partner globally. Leader status signifies that Deloitte demonstrates strategic excellence \u2014 a clear, forward-thinking vision aligned with emerging technologies and market trends \u2014 and operational excellence, consistently delivering high-quality solutions on time and within budget with measurable business impact and exceptional customer satisfaction.",
+            "For the Cognitive AI implementation, this recognition provides assurance that you are partnering with a vendor that combines proven delivery excellence, strategic innovation leadership and unwavering commitment to long-term customer success. Deloitte\u2019s Leader status reflects our global scale, enterprise-grade capabilities, expertise in complex system integration, security and compliance excellence, and commitment to managed services and continuous improvement \u2014 all critical factors for the Cognitive AI programme.",
           ],
+        },
+
+        {
+          /* Export the quadrant graphic from the source deck at full
+             resolution into assets/img/, then set `src` below. A crop of a
+             screenshot will not hold up on a projector. */
+          type: "image",
+          src: "" /* "assets/img/gartner-mq-2025.png" */,
+          placeholder: "Magic Quadrant chart \u2014 add the file and set `src` above",
+          caption:
+            "Gartner\u00AE Magic Quadrant\u2122 for Custom Software Development Services, Worldwide. As of September 2025. \u00A9 Gartner, Inc.",
         },
       ],
     },

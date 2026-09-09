@@ -568,10 +568,22 @@ const BLOCKS = {
   image(b) {
     const fig = el("figure", "card");
     fig.style.padding = "0"; fig.style.overflow = "hidden";
-    const img = el("img");
-    img.src = b.src; img.alt = b.caption || "";
-    img.style.width = "100%"; img.style.display = "block";
-    fig.appendChild(img);
+    if (b.src) {
+      const img = el("img");
+      img.src = b.src; img.alt = b.caption || "";
+      img.style.width = "100%"; img.style.display = "block";
+      /* A wrong path should say so, not show a broken-image icon on a projector. */
+      img.addEventListener("error", () => {
+        img.remove();
+        fig.insertBefore(el("div", "img-placeholder", "Image not found: " + esc(b.src)), fig.firstChild);
+      });
+      fig.appendChild(img);
+    } else {
+      /* No file yet — a labelled slot, so the page never looks broken while
+         you are still collecting artwork. */
+      fig.appendChild(el("div", "img-placeholder",
+        esc(b.placeholder || "Image placeholder")));
+    }
     if (b.caption) {
       const cap = el("figcaption", "card__body");
       cap.style.padding = "16px 22px"; cap.textContent = b.caption;
