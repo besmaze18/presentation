@@ -44,6 +44,27 @@ window.CONTENT = {
         },
 
         {
+          section: "Establishing the platform baseline before phased delivery",
+          type: "supportbar",
+          title: "Enabled by Discovery & Design — M3",
+          body: "Everything the two releases depend on is settled here first.",
+        },
+
+        {
+          type: "text",
+          body: [
+            "The Discovery & Design phase lays the foundation for successful delivery by aligning key decisions upfront and confirming critical milestones, including Solution Architecture approval, the connection point analysis and portability strategy, and pilot entity selection.",
+          ],
+          bullets: [
+            "Align scope, architecture and implementation priorities across the three sub-offerings",
+            "Validate key dependencies and {{LEGACY}} integration requirements",
+            "Confirm strategic design, hyperscaler and technology decisions",
+            "Confirm the portability position through the connection point analysis",
+            "Define the delivery roadmap for Release 1 and Release 2",
+            "Establish the basis for pilot execution and successful delivery",
+          ],
+        },
+        {
           section: "…that shape delivery across two major releases",
           lead:
             "The Cognitive AI release roadmap is structured across Release 1 and Release 2. The Discovery & Design phase establishes the foundation by confirming scope, architecture, the portability strategy and the pilot entity for early onboarding.",
@@ -69,21 +90,6 @@ window.CONTENT = {
           body: "The pilot entity comes on board with Release 1, not after it.",
         },
 
-        {
-          section: "Enabled by Discovery & Design — M3",
-          type: "text",
-          body: [
-            "The Discovery & Design phase lays the foundation for successful delivery by aligning key decisions upfront and confirming critical milestones, including Solution Architecture approval, the connection point analysis and portability strategy, and pilot entity selection.",
-          ],
-          bullets: [
-            "Align scope, architecture and implementation priorities across the three sub-offerings",
-            "Validate key dependencies and {{LEGACY}} integration requirements",
-            "Confirm strategic design, hyperscaler and technology decisions",
-            "Confirm the portability position through the connection point analysis",
-            "Define the delivery roadmap for Release 1 and Release 2",
-            "Establish the basis for pilot execution and successful delivery",
-          ],
-        },
       ],
     },
 

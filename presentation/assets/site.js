@@ -487,6 +487,70 @@ const BLOCKS = {
     return wrap;
   },
 
+  /* -------- A row of headline figures: { value, label }. Every tile is the
+     same width, so a row of three or of seven still lines up. */
+  statrow(b) {
+    const wrap = el("div", "statrow");
+    (b.items || []).forEach(it => {
+      const cell = el("div", "statrow__item");
+      cell.appendChild(el("div", "statrow__value", esc(it.value)));
+      cell.appendChild(el("div", "statrow__label", esc(it.label)));
+      wrap.appendChild(cell);
+    });
+    return wrap;
+  },
+
+  /* -------- Four cards around a central logo medallion, the way a vendor
+     slide puts the product in the middle of what it gives you.
+     { logo, logoAlt, logoCaption, items: [{ title, body }] }
+     On narrow screens the medallion drops above the cards. */
+  hubgrid(b) {
+    const wrap = el("div", "hub");
+    if (b.logo) {
+      const medal = el("div", "hub__medallion");
+      const img = el("img", "hub__logo");
+      img.src = b.logo;
+      img.alt = applyParams(b.logoAlt || "");
+      medal.appendChild(img);
+      if (b.logoCaption) medal.appendChild(el("div", "hub__caption", esc(b.logoCaption)));
+      wrap.appendChild(medal);
+    }
+    const grid = el("div", "hub__grid");
+    (b.items || []).forEach(it => {
+      const card = el("article", "hub__card");
+      card.appendChild(el("h3", "hub__title", esc(it.title)));
+      if (it.body) card.appendChild(el("p", "hub__body", esc(it.body)));
+      grid.appendChild(card);
+    });
+    wrap.appendChild(grid);
+    return wrap;
+  },
+
+  /* -------- Two brands side by side with a rule between them, over a
+     partnership title and tagline. { left, logo, logoAlt, right, title,
+     tagline } — `left` and `right` are words, `logo` is an image path. */
+  lockup(b) {
+    const wrap = el("div", "lockup");
+    const row = el("div", "lockup__brands");
+    if (b.left) row.appendChild(el("span", "lockup__word", esc(b.left)));
+    if (b.logo || b.right) {
+      row.appendChild(el("span", "lockup__rule"));
+      const mark = el("span", "lockup__mark");
+      if (b.logo) {
+        const img = el("img", "lockup__logo");
+        img.src = b.logo;
+        img.alt = applyParams(b.logoAlt || "");
+        mark.appendChild(img);
+      }
+      if (b.right) mark.appendChild(el("span", "lockup__word", esc(b.right)));
+      row.appendChild(mark);
+    }
+    wrap.appendChild(row);
+    if (b.title) wrap.appendChild(el("div", "lockup__title", esc(b.title)));
+    if (b.tagline) wrap.appendChild(el("div", "lockup__tag", esc(b.tagline)));
+    return wrap;
+  },
+
   text(b) {
     const wrap = el("div", "text-block");
     if (b.heading) wrap.appendChild(el("h3", null, esc(b.heading)));
@@ -564,7 +628,11 @@ const BLOCKS = {
   /* Layered architecture diagram: a set of titled bands, each holding cells
      and/or nested groups. Cells and band/group headers may link to a view. */
   bands(b) {
-    const wrap = el("div", "bands");
+    /* `collapsible: false` makes the layers static — no chevron, no click.
+       Use it where the whole stack is the point and hiding a layer would
+       break the story. */
+    const canCollapse = b.collapsible !== false;
+    const wrap = el("div", "bands" + (canCollapse ? "" : " bands--static"));
     /* legend entries can carry a `tip` — shown as a rich hover card over any
        badge with that key, both in the legend and on the cells */
     const tipMap = {};
@@ -609,11 +677,11 @@ const BLOCKS = {
         (g.cells || []).forEach(cell => sg.appendChild(bandCell(cell)));
         sInner.appendChild(sg);
         sub.appendChild(sBody);
-        collapsible(sub, sh, g.collapsed);
+        if (canCollapse) collapsible(sub, sh, g.collapsed);
         inner.appendChild(sub);
       });
       sec.appendChild(bodyEl);
-      collapsible(sec, head, band.collapsed);
+      if (canCollapse) collapsible(sec, head, band.collapsed);
       wrap.appendChild(sec);
     });
     return wrap;
@@ -1304,7 +1372,12 @@ function collapsible(container, head, startCollapsed) {
 /* A single cell inside an architecture band. */
 function bandCell(cell) {
   const act = linkAction(cell);
-  const c = el("div", "bandcell" + (act ? " is-link" : "") + (cell.core ? " bandcell--core" : ""));
+  const c = el("div", "bandcell" + (act ? " is-link" : "")
+    + (cell.core ? " bandcell--core" : "")
+    /* `lead` brings a cell forward, `muted` pushes it back — for a row where
+       one item is in scope for this programme and the others are context. */
+    + (cell.lead ? " bandcell--lead" : "")
+    + (cell.muted ? " bandcell--muted" : ""));
   if (act) c.addEventListener("click", act);
   const title = el("div", "bandcell__title");
   title.appendChild(el("span", null, esc(cell.title)));

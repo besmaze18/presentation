@@ -33,7 +33,7 @@ window.CONTENT = {
       },
       leadership: {
         label: "Program Leadership Pod",
-        boxes: ["GCC Engagement Partner", "QA Partner", "Account Relationship Partners"],
+        boxes: ["Engagement Partner", "QA Partner", "Account Relationship Partners"],
       },
       governancePods: {
         label: "Governance Pods",

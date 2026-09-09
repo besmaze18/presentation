@@ -1453,3 +1453,162 @@ body[data-page="open"] .team-card__role { font-size: .95rem; }
   background: repeating-linear-gradient(45deg, #f3ecee, #f3ecee 12px, #efe6e9 12px, #efe6e9 24px);
   color: var(--muted); font-size: .72rem; font-weight: 600; letter-spacing: .05em;
 }
+
+/* =========================================================================
+   Additions for the Cognitive AI deck.
+   ========================================================================= */
+
+/* ------------------------------------------ band cells: forward and back */
+/* One cell in a row is what this programme delivers; the rest are context.
+   `lead: true` brings a cell forward, `muted: true` pushes it back. */
+.bandcell--lead {
+  border-color: var(--maroon);
+  background: linear-gradient(180deg, rgba(138, 21, 56, 0.10), #fff);
+  box-shadow: 0 0 0 2px rgba(138, 21, 56, 0.16), var(--shadow-soft);
+}
+.bandcell--muted {
+  background: #f4f2f2;
+  border-style: dashed;
+  opacity: 0.62;
+}
+.bandcell--muted .bandcell__title { color: var(--muted); font-weight: 600; }
+
+/* Static bands: no chevron, no pointer, nothing to click open or shut. */
+.bands--static .band__chev,
+.bands--static .band__subhead .band__chev { display: none; }
+.bands--static .band__head,
+.bands--static .band__subhead { cursor: default; }
+
+/* --------------------------------------------------------- Headline figures */
+.statrow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 6px 0 28px;
+}
+.statrow__item {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  padding: 20px 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  min-height: 118px;
+}
+.statrow__value {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--maroon);
+  line-height: 1.1;
+}
+.statrow__label { font-size: 0.82rem; color: var(--muted); font-weight: 600; line-height: 1.35; }
+
+/* -------------------------------------------------- Logo hub: 2x2 + medallion */
+.hub { position: relative; margin: 8px 0 30px; }
+.hub__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.hub__card {
+  background: linear-gradient(135deg, #a83a5b, var(--maroon));
+  color: #fff;
+  border-radius: 16px;
+  padding: 24px 26px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hub__title { margin: 0; font-size: 1.05rem; font-weight: 750; color: #fff; }
+.hub__body { margin: 0; color: rgba(255, 255, 255, 0.92); font-size: 0.92rem; }
+
+/* On a wide screen the medallion floats over the middle of the 2x2, the way
+   the source slide draws it. Below that it becomes a plain header. */
+.hub__medallion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  margin: 0 auto 16px;
+  width: 190px;
+  height: 190px;
+  padding: 18px;
+}
+.hub__logo { width: 62px; height: 62px; display: block; }
+.hub__caption {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .hub { padding: 0; }
+  .hub__medallion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    margin: 0;
+  }
+  /* keep the cards clear of the medallion sitting over the gutter */
+  .hub__grid { gap: 30px 120px; }
+}
+
+/* ------------------------------------------------------- Partnership lockup */
+.lockup {
+  background: linear-gradient(135deg, #ffffff, var(--bg-soft));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  padding: 34px 28px;
+  text-align: center;
+  margin: 8px 0 28px;
+}
+.lockup__brands {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.lockup__word {
+  font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.lockup__rule { width: 1px; height: 42px; background: var(--line); }
+.lockup__mark { display: inline-flex; align-items: center; gap: 12px; }
+.lockup__logo { width: 40px; height: 40px; display: block; }
+.lockup__title {
+  margin-top: 14px;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-weight: 750;
+  color: var(--maroon);
+}
+.lockup__tag {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .hub__grid { grid-template-columns: minmax(0, 1fr); }
+}

@@ -7,11 +7,11 @@
 
      1. The Architecture       the four layers, before any product names
      2. GCP at the Heart       why Google Cloud anchors the engine layer
-     3. QORE                   what is built once and reused three times
-     4. Proposed Architecture  the same stack with every component named
+     3. Proposed Architecture  the same stack with every component named
 
-   In the architecture views, click any coloured layer header to collapse
-   or expand that layer — useful for taking one layer at a time in the room.
+   In Proposed Architecture, click any coloured layer header to collapse or
+   expand that layer — useful for taking one layer at a time in the room.
+   The Architecture is deliberately static: it is read whole.
 
    To add a slide, copy a whole { id, label, title, lead, sections } block
    below and give it a new `id`. To reorder the slides, move the blocks.
@@ -23,7 +23,7 @@
 
 window.CONTENT = {
   title: "High Level *Solution*",
-  subtitle: "From the four architectural layers and the engine beneath them, through what QORE reuses across all three offerings, to the full component-level architecture.",
+  subtitle: "From the four architectural layers, through the engine that sits beneath them, to the full component-level architecture.",
 
   /* -------------------------------------------------- top-level views */
   views: [
@@ -35,17 +35,20 @@ window.CONTENT = {
       label: "The Architecture",
       title: "The *Architecture*",
       lead:
-        "Our proposed solution is built for {{COUNTRY}}, owned by {{COUNTRY}}, and seamlessly integrates with every {{LEGACY}} 2.0 offering — portable by design. Click a layer header to collapse it.",
+        "Our proposed solution is built for {{COUNTRY}}, owned by {{COUNTRY}}, and seamlessly integrates with every {{LEGACY}} 2.0 offering — portable by design.",
       sections: [
         {
           type: "bands",
+          /* The four layers together are the argument, so none of them fold
+             away — this view is read whole. */
+          collapsible: false,
           bands: [
             {
               title: "Platform OS — unified front door for {{LEGACY}} 2.0 offerings",
               cells: [
-                { title: "Cognitive AI", sub: "Capability Hub", ref: "In scope for this programme" },
-                { title: "Integrated Command & Control Centre", sub: "Consumes" },
-                { title: "Digital Twin", sub: "Consumes" },
+                { title: "Cognitive AI", sub: "Capability Hub", ref: "In scope for this programme", lead: true },
+                { title: "Integrated Command & Control Centre", sub: "Consumes", muted: true },
+                { title: "Digital Twin", sub: "Consumes", muted: true },
               ],
             },
             {
@@ -100,9 +103,10 @@ window.CONTENT = {
         },
       ],
     },
-
     /* ------------------------------------------------------------------ 2
-       Why Google Cloud sits at the bottom of that stack. */
+       Why Google Cloud sits at the bottom of that stack: the figures first,
+       then what the engine gives us, then the answer to the obvious
+       objection. */
     {
       id: "gcp",
       label: "GCP at the Heart",
@@ -111,39 +115,36 @@ window.CONTENT = {
         "Google Cloud anchors the infrastructure layer, and Gemini is our AI provider of choice.",
       sections: [
         {
-          type: "columns",
-          cols: 3,
+          type: "statrow",
           items: [
-            { title: "Gemini", body: "Frontier models" },
-            { title: "200+", body: "Models in Model Garden" },
-            { title: "GPU · TPU", body: "Elastic AI compute" },
+            { value: "Gemini", label: "Frontier models" },
+            { value: "200+", label: "Models in Model Garden" },
+            { value: "GPU · TPU", label: "Elastic AI compute" },
           ],
         },
         {
-          type: "cards",
-          variant: "filled",
-          cols: 2,
+          section: "What the engine gives us",
+          type: "hubgrid",
+          logo: "assets/img/google-g.svg",
+          logoAlt: "Google",
+          logoCaption: "Google Cloud",
           items: [
             {
-              num: null,
               title: "Gemini + Model Garden",
               body:
                 "Frontier reasoning, multimodal and agentic models, alongside 200+ third-party and open-weight models — all reachable through one governed catalogue.",
             },
             {
-              num: null,
               title: "Agent Platform Managed AI Services",
               body:
                 "Managed training, serving, pipelines and vector search. We consume these rather than hand-build equivalents — Principle 2 in action.",
             },
             {
-              num: null,
               title: "GPU & TPU at Scale",
               body:
                 "Elastic accelerator capacity for training, fine-tuning and high-volume inference — sized to real AI economics, not fixed capacity.",
             },
             {
-              num: null,
               title: "Native RAG & Data Services",
               body:
                 "Vector search and object storage services sit next to the models, keeping retrieval fast and grounded.",
@@ -159,54 +160,8 @@ window.CONTENT = {
       ],
     },
 
-    /* ------------------------------------------------------------------ 3
-       QORE — what is built once and reused across all three offerings. */
-    {
-      id: "qore",
-      label: "QORE",
-      title: "QORE — purpose-built across *three offerings*",
-      lead:
-        "We propose a custom-built solution, designed and developed for {{COUNTRY}}'s specific requirements. We call it QORE — an open-source, extensible platform already proposed for iCCC and Digital Twin, now extended to Cognitive AI as the orchestration and portability layer.",
-      sections: [
-        {
-          section: "What QORE contributes as reusable enablers",
-          type: "tags",
-          items: [
-            "Model Gateway",
-            "Agent Runtime & MCP",
-            "Workflow Canvas & Engine",
-            "RAG & Vector Services",
-            "ML Ops Pipelines",
-            "Responsible AI & Audit",
-          ],
-        },
-        {
-          type: "bands",
-          bands: [
-            {
-              title: "QORE — the common SDK & orchestration layer",
-              color: "dark",
-              note:
-                "Designed from the ground up on open standards — deploys on any Kubernetes — owned by {{COUNTRY}}.",
-              cells: [
-                { title: "Cognitive AI Toolkit", sub: "Capability built here", ref: "Built once" },
-                { title: "Integrated Command & Control Centre", sub: "Consumes" },
-                { title: "Digital Twin", sub: "Consumes" },
-              ],
-            },
-          ],
-        },
-        {
-          type: "text",
-          body: [
-            "We are proposing to build QORE for your offerings. The interfaces between them are a design decision we would need to make and validate during the Discovery & Design phase.",
-            "Capability is built once in Cognitive AI and consumed by iCCC and Digital Twin, and Platform OS Discovery is the single entry point to the Marketplace, Toolkit & Sandbox and ML Ops for every user across the programme.",
-          ],
-        },
-      ],
-    },
 
-    /* ------------------------------------------------------------------ 4
+    /* ------------------------------------------------------------------ 3
        The same architecture with every component named. Layer headers
        collapse, so you can open one layer at a time in the room. */
     {

@@ -12,7 +12,7 @@
    `image` is optional: put a file in assets/img/ and reference it as
    "assets/img/name.jpg". Left empty, the card shows a placeholder panel.
 
-   {{XXXX}} is the delivery partner name, set once in content/config.js.
+   Deloitte is the delivery partner name, set once in content/config.js.
    ===================================================================== */
 window.CONTENT = {
   title: "We have done this *before*",
@@ -40,7 +40,7 @@ window.CONTENT = {
               subtitle: "Internal Enterprise Agentic AI Platform",
               tags: ["AI Toolkit & Sandbox", "MLOps"],
               body:
-                "{{XXXX}} designed and is implementing an **internal enterprise agentic AI platform** for a UAE government entity to enable employees to embed AI into their daily work. {{XXXX}} defined the platform vision, governance model and implementation roadmap, and developed a cloud-integrated solution that **enables employees to access purpose-built AI agents and create custom agents using internal data, approved LLM models and internal templates**. The first version of the platform has reached launch stage, with **400+ signups** and a planned scale-up to **more than 2,000 employees**.",
+                "Deloitte designed and is implementing an **internal enterprise agentic AI platform** for a UAE government entity to enable employees to embed AI into their daily work. Deloitte defined the platform vision, governance model and implementation roadmap, and developed a cloud-integrated solution that **enables employees to access purpose-built AI agents and create custom agents using internal data, approved LLM models and internal templates**. The first version of the platform has reached launch stage, with **400+ signups** and a planned scale-up to **more than 2,000 employees**.",
             },
             {
               image: "" /* e.g. "assets/img/sovereign-fund.jpg" */,
@@ -48,7 +48,7 @@ window.CONTENT = {
               subtitle: "Enterprise MLOps Enablement",
               tags: ["MLOps"],
               body:
-                "{{XXXX}} migrated a client's open-source machine learning models (Python and R) onto an **enterprise data science platform**, introduced stronger **MLOps practices** to replace manual model management, and ran **enablement workshops to build business-user trust and adoption**. Across forecasting, investment and HR analytics use cases, the initiative **improved development and deployment turn-around times** and delivered a **17% reduction in employee churn** and a **23% reduction in forecasting margin of error** for raw materials planning.",
+                "Deloitte migrated a client's open-source machine learning models (Python and R) onto an **enterprise data science platform**, introduced stronger **MLOps practices** to replace manual model management, and ran **enablement workshops to build business-user trust and adoption**. Across forecasting, investment and HR analytics use cases, the initiative **improved development and deployment turn-around times** and delivered a **17% reduction in employee churn** and a **23% reduction in forecasting margin of error** for raw materials planning.",
             },
             {
               image: "" /* e.g. "assets/img/smart-township.jpg" */,
@@ -64,7 +64,7 @@ window.CONTENT = {
               subtitle: "Agentic AI powered Customer Service Transformation",
               tags: ["AI Toolkit & Sandbox"],
               body:
-                "{{XXXX}} and Google helped improve customer service after a post-pandemic surge in inquiries and claims. Using Google Document AI, Gemini and Vertex AI, they **built an intelligent assistant that helps agents answer complex health insurance questions** faster and more accurately. The result was a **30% faster information search**, a **drop in escalations from 27% to 3%**, and a **doubling of NPS within one year**.",
+                "Deloitte and Google helped improve customer service after a post-pandemic surge in inquiries and claims. Using Google Document AI, Gemini and Vertex AI, they **built an intelligent assistant that helps agents answer complex health insurance questions** faster and more accurately. The result was a **30% faster information search**, a **drop in escalations from 27% to 3%**, and a **doubling of NPS within one year**.",
             },
           ],
         },
@@ -75,28 +75,35 @@ window.CONTENT = {
     {
       id: "partnership",
       label: "Google Partnership",
-      title: "{{XXXX}} & Google *Partnership*",
-      lead:
-        "A 360° partnership — we go farther, faster, together.",
+      title: "Deloitte & Google *Partnership*",
+      lead: "",
 
       sections: [
         {
-          section: "The partnership in numbers",
-          type: "columns",
-          cols: 4,
+          type: "lockup",
+          left: "Deloitte.",
+          logo: "assets/img/google-g.svg",
+          logoAlt: "Google",
+          right: "Google",
+          title: "360° Partnership",
+          tagline: "We go farther, faster, together",
+        },
+
+        {
+          type: "statrow",
           items: [
-            { title: "1,000 +", body: "Engagements over the past 5+ years" },
-            { title: "44K +", body: "Global Data & AI specialists" },
-            { title: "10K +", body: "Global certifications" },
-            { title: "$2B", body: "Investment in AI, Cloud & Cyber" },
-            { title: "100 +", body: "Unique global clients" },
-            { title: "330 +", body: "AI & agentic AI assets in agent fleet" },
-            { title: "47 +", body: "Countries served" },
+            { value: "1,000 +", label: "Engagements over the past 5+ years" },
+            { value: "44K +", label: "Global Data & AI specialists" },
+            { value: "10K +", label: "Global certifications" },
+            { value: "$2B", label: "Investment in AI, Cloud & Cyber" },
+            { value: "100 +", label: "Unique global clients" },
+            { value: "330 +", label: "AI & agentic AI assets in agent fleet" },
+            { value: "47 +", label: "Countries served" },
           ],
         },
 
         {
-          section: "{{XXXX}}: AI market leader, Google AI stack expertise",
+          section: "Deloitte: AI market leader, Google AI stack expertise",
           type: "cards",
           cols: 3,
           items: [
@@ -128,7 +135,7 @@ window.CONTENT = {
               num: "05",
               title: "Grounded in Ethical & Trustworthy AI",
               body:
-                "{{XXXX}}'s Trustworthy AI Framework embeds technical guardrails, risk mitigation, explainability and security into every deployment.",
+                "Deloitte's Trustworthy AI Framework embeds technical guardrails, risk mitigation, explainability and security into every deployment.",
             },
           ],
         },
@@ -141,7 +148,7 @@ window.CONTENT = {
       label: "Worldwide Leaders",
       title: "Worldwide *Leaders*",
       lead:
-        "{{XXXX}} have consistently led the category for worldwide leader in custom software development.",
+        "Deloitte have consistently led the category for worldwide leader in custom software development.",
 
       sections: [
         {

@@ -32,10 +32,11 @@ window.CONTENT = {
         "We propose a custom-built solution for {{COUNTRY}}, engineered to our QORE reference architecture and assembled from leading open-source AI, ML and agentic frameworks.",
 
       sections: [
-        /* The stack comes first: the picture carries the argument, and the
-           prose underneath explains it. Three capability hubs sit under one
-           front door; QORE is the portable layer beneath them; the platform
-           is the foundation beneath that. */
+        /* The stack carries the argument, so it is the whole slide. Cognitive
+           AI is what this programme delivers; Digital Twin and iCCC are the
+           other two hubs the same foundation will serve, so they are drawn
+           back rather than removed. The positioning copy sits inside the QORE
+           band, where the claim it supports is. */
         {
           type: "bands",
           bands: [
@@ -46,9 +47,10 @@ window.CONTENT = {
                   title: "Cognitive AI",
                   sub: "Capability Hub",
                   ref: "In scope for this programme",
+                  lead: true,
                 },
-                { title: "Digital Twin", sub: "Capability Hub" },
-                { title: "iCCC", sub: "Capability Hub" },
+                { title: "Digital Twin", sub: "Capability Hub", muted: true },
+                { title: "iCCC", sub: "Capability Hub", muted: true },
               ],
             },
             {
@@ -58,9 +60,19 @@ window.CONTENT = {
                 "Built once. Serves as the flexible product foundation of every {{LEGACY}} 2.0 offering.",
               cells: [
                 {
-                  title: "Foundation SDK",
+                  title: "A purpose-built Cognitive AI platform",
                   sub:
-                    "Fills the portable orchestration layer — built for Cognitive AI, iCCC and Digital Twin, integrated with {{LEGACY}}, and extended as new capability hubs and products arrive.",
+                    "Our solution is a purpose-built Cognitive AI platform, engineered to our QORE reference architecture — a portable, open-source orchestration layer assembled from leading AI, ML and agentic frameworks.",
+                },
+                {
+                  title: "Open standards, no lock-in",
+                  sub:
+                    "Built from the ground up for {{COUNTRY}}'s requirements rather than adapted from a commercial product, it runs on open standards and standard Kubernetes, so it is tied to no hyperscaler and no vendor roadmap.",
+                },
+                {
+                  title: "Owned by {{XXXX}}",
+                  sub:
+                    "Source code and IP vest in {{XXXX}} in full. Component selections are validated with {{XXXX}} during Discovery & Design against jointly agreed criteria.",
                 },
               ],
             },
@@ -75,28 +87,6 @@ window.CONTENT = {
                 },
               ],
             },
-          ],
-        },
-
-        {
-          section: "What {{COUNTRY}} gets",
-          type: "tags",
-          items: [
-            "Built for {{COUNTRY}}",
-            "Pay as you grow",
-            "No licence fee",
-            "Open source",
-            "Secure & scalable",
-            "Requirements compliant",
-          ],
-        },
-
-        {
-          type: "text",
-          body: [
-            "Our solution is a purpose-built Cognitive AI platform, engineered to our QORE reference architecture — a portable, open-source orchestration layer assembled from leading AI, ML and agentic frameworks.",
-            "Built from the ground up for {{COUNTRY}}'s requirements rather than adapted from a commercial product, it runs on open standards and standard Kubernetes, so it is tied to no hyperscaler and no vendor roadmap.",
-            "Source code and IP vest in {{XXXX}} in full. Component selections are validated with {{XXXX}} during Discovery & Design against jointly agreed criteria.",
           ],
         },
       ],

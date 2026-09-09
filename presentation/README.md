@@ -144,10 +144,35 @@ these are **pop-up** views. Any `band`, band `group`, or cell with
 `detail: "id"` becomes clickable and opens that pop-up over the page (close
 with ✕, Esc, or by clicking outside).
 
-**Solution** (`content/solution.js`) uses four sub-tabs — The Architecture →
-GCP at the Heart → QORE → Proposed Architecture. In the two architecture
-sub-tabs, clicking a coloured layer header collapses or expands that layer,
-so you can take one layer at a time.
+**Solution** (`content/solution.js`) — The Architecture → GCP at the Heart →
+Proposed Architecture. In Proposed Architecture, clicking a coloured layer
+header collapses or expands that layer, so you can take one layer at a time.
+The Architecture is deliberately static — it is read whole.
+
+
+### Highlighting and greying back a band cell
+In a `bands` cell, `lead: true` brings it forward and `muted: true` pushes it
+back — for a row where one item is in scope for this programme and the others
+are context:
+
+```js
+cells: [
+  { title: "Cognitive AI", sub: "Capability Hub", lead: true },
+  { title: "Digital Twin", sub: "Capability Hub", muted: true },
+]
+```
+
+Add `collapsible: false` to the whole `bands` block to make its layers static:
+no chevron, nothing to click open or shut.
+
+### Three more building blocks
+- `statrow` — a row of headline figures, `items: [{ value, label }]`. Every
+  tile is the same width, so a row of three or of seven still lines up.
+- `hubgrid` — four cards around a central logo medallion, the way a vendor
+  slide puts the product in the middle of what it gives you:
+  `{ logo: "assets/img/google-g.svg", logoAlt, logoCaption, items: [{ title, body }] }`.
+- `lockup` — two brands side by side over a partnership title:
+  `{ left, logo, logoAlt, right, title, tagline }`.
 
 ### Fixed columns
 Add `cols: 2` (or 3 / 4) to a `cards` or `columns` block to force that many
